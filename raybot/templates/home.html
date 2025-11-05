@@ -1,0 +1,66 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acesso RayBot</title>
+  <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+
+  <div class="container">
+    <div class="card">
+      <img src="{% static 'LogoRay.png' %}" alt="RayBot Logo" class="logo">
+
+      <h2 class="welcome">Welcome to RayBot</h2>
+      <p class="subtitle">Enter your access code to continue</p>
+
+      <form id="accessForm" class="form">
+        <input
+          type="password"
+          id="accessCode"
+          placeholder="Enter access code"
+          class="input"
+          aria-label="Access Code"
+          required
+        />
+        <button 
+          type="submit"
+          id="accessButton"
+          class="button"
+          disabled
+        >
+          Access RayBot
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("accessForm");
+      const input = document.getElementById("accessCode");
+      const button = document.getElementById("accessButton");
+
+      input.addEventListener("input", () => {
+        button.disabled = input.value.trim() === "";
+      });
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const accessCode = input.value.trim();
+
+        if (accessCode === "12345") {
+          alert("✅ Access granted! Welcome to RayBot.");
+        } else {
+          alert("❌ Código de acesso inválido! Tente '12345'.");
+          input.value = "";
+          button.disabled = true;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
