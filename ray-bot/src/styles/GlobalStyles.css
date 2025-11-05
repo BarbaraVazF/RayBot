@@ -1,0 +1,40 @@
+/* 1. Definição das Variáveis CSS (Design System) */
+:root {
+    --color-primary: #43939d;
+    --color-secondary: #7030a0ff;
+    --color-background: #ffffff;
+    --color-text: #000000;
+
+    /* Gradiente usado na logo e botões */
+    --gradient-logo: linear-gradient(90deg, var(--color-primary), #6366f1, var(--color-secondary));
+    
+    /* Espaçamentos */
+    --spacing-4: 1rem;   /* 16px */
+    --spacing-8: 2rem;   /* 32px */
+    
+    /* Raio da Borda (radius 2xl) */
+    --border-radius-2xl: 1rem; /* 16px */
+    --box-shadow-subtle: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 2. Reset Básico e Tipografia */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    /* Use a fonte "Inter" ou outra "sans-serif" padrão */
+    font-family: "Inter", sans-serif; 
+    background-color: var(--color-background);
+    color: var(--color-text);
+    line-height: 1.5;
+}
+
+/* 3. Estilos Comuns de Componentes (Input/Button) */
+.input, .button {
+    border-radius: var(--border-radius-2xl); 
+    box-shadow: var(--box-shadow-subtle); 
+    transition: all 0.3s ease;
+}
