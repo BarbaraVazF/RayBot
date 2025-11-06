@@ -12,16 +12,16 @@
 
   <div class="container">
     <div class="card">
-      <img src="{% static 'LogoRay.png' %}" alt="RayBot Logo" class="logo">
+      <img src="{% static 'LogoRay.png' %}" alt="Logo Ray" class="logo">
 
-      <h2 class="welcome">Welcome to RayBot</h2>
-      <p class="subtitle">Enter your access code to continue</p>
+      <h2 class="welcome">Bem-Vindo ao RayBot</h2>
+      <p class="subtitle">Digite seu código de acesso para continuar</p>
 
       <form id="accessForm" class="form">
         <input
           type="password"
           id="accessCode"
-          placeholder="Enter access code"
+          placeholder="Digite seu código de acesso"
           class="input"
           aria-label="Access Code"
           required
@@ -32,7 +32,7 @@
           class="button"
           disabled
         >
-          Access RayBot
+          Acessar RayBot
         </button>
       </form>
     </div>
@@ -53,7 +53,7 @@
         const accessCode = input.value.trim();
 
         if (accessCode === "12345") {
-          alert("✅ Access granted! Welcome to RayBot.");
+          window.location.href = "/dashboard/";
         } else {
           alert("❌ Código de acesso inválido! Tente '12345'.");
           input.value = "";
