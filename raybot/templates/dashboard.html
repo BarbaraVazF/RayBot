@@ -24,6 +24,9 @@
       <header class="topbar">
         <img src="{% static 'RAYBOT.svg' %}" alt="Logo RayBot" class="logo-raybot">
         <div class="topbar-actions">
+          <button onclick="window.location.href='/trocar-senha/'" class="icon-btn">
+            🔑 Trocar Senha
+          </button>
           <button class="icon-btn" id="delete-chat-btn">🗑 Apagar Chat Atual</button>
           <button class="icon-btn" id="clear-btn">🧹 Limpar</button>
           <button class="icon-btn" id="export-pdf-btn">📄 Exportar PDF</button>
@@ -120,20 +123,18 @@
       await loadChats();
     }
 
-    // Criar novo chat
     async function createChat(name) {
       const res = await fetch("/api/chats/new/", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
-          "X-CSRFToken": csrftoken    // 🔒 Necessário para Django aceitar POST
+          "X-CSRFToken": csrftoken    
         },
         body: JSON.stringify({ name }),
       });
       return res.json();
     }
 
-    // Enviar mensagem
     form.addEventListener("submit", async e => {
       e.preventDefault();
       const message = input.value.trim();
@@ -149,7 +150,7 @@
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
-          "X-CSRFToken": csrftoken     // ✅ Aqui também
+          "X-CSRFToken": csrftoken     
         },
         body: JSON.stringify({ content: message }),
       });
@@ -162,7 +163,6 @@
       chatBox.scrollTop = chatBox.scrollHeight;
     });
 
-    // Novo chat
     document.getElementById("new-chat-btn").addEventListener("click", async () => {
       const res = await createChat("Chat " + new Date().toLocaleString());
       activeChatId = res.id;
@@ -170,7 +170,6 @@
       await selectChat(res.id);
     });
 
-    // Limpar chat
     clearBtn.addEventListener("click", async () => {
       if (!activeChatId) return;
       await fetch(`/api/chats/${activeChatId}/clear/`, { 
@@ -180,7 +179,6 @@
       await selectChat(activeChatId);
     });
 
-    // Apagar chat
     deleteBtn.addEventListener("click", async () => {
       if (!activeChatId) return;
       if (confirm("Tem certeza que deseja excluir este chat?")) {

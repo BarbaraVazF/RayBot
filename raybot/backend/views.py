@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.decorators import login_required
 from .models import Chat, Message
+from django.contrib import messages
 import json
 from django.contrib.auth import authenticate, login
 from reportlab.lib.pagesizes import A4
@@ -11,6 +12,7 @@ from reportlab.lib.units import cm
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Flowable
 from datetime import datetime
 import urllib.parse
+from django.contrib.auth import update_session_auth_hash
 
 def home(request):
     if request.method == "POST":
@@ -86,13 +88,11 @@ class Bubble(Flowable):
 def exportar_pdf(request, chat_id):
     chat = get_object_or_404(Chat, id=chat_id)
 
-    # filename opcional via ?filename=nome
     filename_qs = request.GET.get("filename")
     safe_name = (filename_qs.strip() if filename_qs else chat.name).replace(" ", "_")
-    safe_name = urllib.parse.quote(safe_name, safe='')  # garante chars seguros
+    safe_name = urllib.parse.quote(safe_name, safe='')  
     filename = f"{safe_name}.pdf"
 
-    # Busca mensagens ordenadas por created_at (seu campo atual)
     messages = Message.objects.filter(chat=chat).order_by("created_at")
 
     response = HttpResponse(content_type="application/pdf")
@@ -148,7 +148,6 @@ def exportar_pdf(request, chat_id):
         spaceAfter=8,
     )
 
-    # Cabeçalho: título e data
     now_str = datetime.now().strftime("%Y-%m-%d %H:%M")
     story.append(Paragraph(f"RayBot — Conversa: {chat.name}", title_style))
     story.append(Paragraph(f"Usuário: {chat.user.username} • Exportado em: {now_str}", meta_style))
@@ -157,11 +156,9 @@ def exportar_pdf(request, chat_id):
     if not messages.exists():
         story.append(Paragraph("Sem mensagens nesta conversa.", styles['Normal']))
     else:
-        # Adiciona mensagens em ordem
         for m in messages:
             text = m.content.replace("\n", "<br/>")
             if m.sender == "user":
-                # usuário: alinhado à direita visual (usamos user_style)
                 story.append(Paragraph(text, user_style))
             else:
                 # bot
@@ -169,3 +166,24 @@ def exportar_pdf(request, chat_id):
 
     doc.build(story)
     return response
+
+@login_required
+def trocar_senha(request):
+    if request.method == "POST":
+        senha_atual = request.POST.get("senha_atual")
+        nova_senha = request.POST.get("nova_senha")
+        confirmar_senha = request.POST.get("confirmar_senha")
+
+        if not request.user.check_password(senha_atual):
+            messages.error(request, "❌ A senha atual está incorreta.")
+        elif nova_senha != confirmar_senha:
+            messages.error(request, "⚠️ As senhas não coincidem.")
+        elif len(nova_senha) < 6:
+            messages.error(request, "🔒 A nova senha deve ter pelo menos 6 caracteres.")
+        else:
+            request.user.set_password(nova_senha)
+            request.user.save()
+            update_session_auth_hash(request, request.user)
+            return redirect("dashboard")
+
+    return render(request, "trocar_senha.html")

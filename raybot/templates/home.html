@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Acesso RayBot</title>
-  <link rel="stylesheet" href="{% static 'styles.css' %}">
+  <link rel="stylesheet" href="{% static 'home.css' %}">
 </head>
 
 <body>
@@ -28,23 +28,41 @@
           required
         />
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Senha"
-          class="input"
-          required
-        />
+        <div class="input-container">
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Senha"
+            class="input"
+            required
+          />
+          <button type="button" id="togglePassword" class="toggle-password" aria-label="Mostrar senha">👁️</button>
+        </div>
 
         <button type="submit" class="button">
           Acessar RayBot
         </button>
 
         {% if form.errors %}
-          <p style="color: red; margin-top: 10px;">Usuário ou senha inválidos.</p>
+          <p class="error">Usuário ou senha inválidos.</p>
         {% endif %}
       </form>
     </div>
   </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const toggleBtn = document.getElementById("togglePassword");
+      const passwordInput = document.getElementById("password");
+      let visible = false;
+
+      toggleBtn.addEventListener("click", () => {
+        visible = !visible;
+        passwordInput.type = visible ? "text" : "password";
+        toggleBtn.textContent = visible ? "👁️" : "👁️";
+      });
+    });
+  </script>
 </body>
 </html>
