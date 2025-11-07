@@ -1,9 +1,16 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.decorators import login_required
 from .models import Chat, Message
 import json
 from django.contrib.auth import authenticate, login
+from reportlab.lib.pagesizes import A4
+from reportlab.lib import colors
+from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
+from reportlab.lib.units import cm
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Flowable
+from datetime import datetime
+import urllib.parse
 
 def home(request):
     if request.method == "POST":
@@ -69,3 +76,96 @@ def clear_chat(request, chat_id):
         chat.messages.all().delete()
         Message.objects.create(chat=chat, sender="bot", content="🧹 Chat limpo! Pode começar uma nova conversa.")
         return JsonResponse({"success": True})
+
+class Bubble(Flowable):
+    def __init__(self, width, height):
+        Flowable.__init__(self)
+        self.width = width
+        self.height = height
+
+def exportar_pdf(request, chat_id):
+    chat = get_object_or_404(Chat, id=chat_id)
+
+    # filename opcional via ?filename=nome
+    filename_qs = request.GET.get("filename")
+    safe_name = (filename_qs.strip() if filename_qs else chat.name).replace(" ", "_")
+    safe_name = urllib.parse.quote(safe_name, safe='')  # garante chars seguros
+    filename = f"{safe_name}.pdf"
+
+    # Busca mensagens ordenadas por created_at (seu campo atual)
+    messages = Message.objects.filter(chat=chat).order_by("created_at")
+
+    response = HttpResponse(content_type="application/pdf")
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+
+    doc = SimpleDocTemplate(response, pagesize=A4,
+                            rightMargin=2*cm, leftMargin=2*cm,
+                            topMargin=2*cm, bottomMargin=2*cm)
+    story = []
+
+    styles = getSampleStyleSheet()
+    title_style = ParagraphStyle(
+        'Title',
+        parent=styles['Heading2'],
+        alignment=1,  
+        spaceAfter=12,
+    )
+
+    meta_style = ParagraphStyle(
+        'Meta',
+        parent=styles['Normal'],
+        fontSize=9,
+        textColor=colors.grey,
+        alignment=1,
+        spaceAfter=12
+    )
+
+    bot_style = ParagraphStyle(
+        "Bot",
+        parent=styles['BodyText'],
+        fontName="Helvetica",
+        fontSize=11,
+        leading=14,
+        textColor=colors.black,
+        backColor=colors.HexColor("#E6E7E8"), 
+        leftIndent=0,
+        rightIndent=60,
+        borderPadding=6,
+        spaceAfter=8,
+    )
+
+    user_style = ParagraphStyle(
+        "User",
+        parent=styles['BodyText'],
+        fontName="Helvetica-Bold",
+        fontSize=11,
+        leading=14,
+        textColor=colors.HexColor("#040213"),  
+        backColor=colors.HexColor("#7C5CE6"),  
+        leftIndent=60,
+        rightIndent=0,
+        borderPadding=6,
+        spaceAfter=8,
+    )
+
+    # Cabeçalho: título e data
+    now_str = datetime.now().strftime("%Y-%m-%d %H:%M")
+    story.append(Paragraph(f"RayBot — Conversa: {chat.name}", title_style))
+    story.append(Paragraph(f"Usuário: {chat.user.username} • Exportado em: {now_str}", meta_style))
+    story.append(Spacer(1, 0.2*cm))
+
+    if not messages.exists():
+        story.append(Paragraph("Sem mensagens nesta conversa.", styles['Normal']))
+    else:
+        # Adiciona mensagens em ordem
+        for m in messages:
+            text = m.content.replace("\n", "<br/>")
+            if m.sender == "user":
+                # usuário: alinhado à direita visual (usamos user_style)
+                story.append(Paragraph(text, user_style))
+            else:
+                # bot
+                story.append(Paragraph(text, bot_style))
+
+    doc.build(story)
+    return response

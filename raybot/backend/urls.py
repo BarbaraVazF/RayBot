@@ -12,4 +12,5 @@ urlpatterns = [
     path("api/chats/<int:chat_id>/messages/", views.get_messages, name="get_messages"),
     path("api/chats/<int:chat_id>/send/", views.send_message, name="send_message"),
     path("api/chats/<int:chat_id>/delete/", views.delete_chat, name="delete_chat"),
+    path("exportar_pdf/<int:chat_id>/", views.exportar_pdf, name="exportar_pdf"),
 ]

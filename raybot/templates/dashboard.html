@@ -26,8 +26,11 @@
         <div class="topbar-actions">
           <button class="icon-btn" id="delete-chat-btn">🗑 Apagar Chat Atual</button>
           <button class="icon-btn" id="clear-btn">🧹 Limpar</button>
-          <button class="icon-btn">📄 Exportar PDF</button>
-          <button class="logout-btn" onclick="window.location.href='{% url 'logout' %}'">⎋ Sair</button>
+          <button class="icon-btn" id="export-pdf-btn">📄 Exportar PDF</button>
+          <form id="logout-form" action="{% url 'logout' %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="logout-btn">⎋ Sair</button>
+          </form>
         </div>
       </header>
 
@@ -172,7 +175,7 @@
       if (!activeChatId) return;
       await fetch(`/api/chats/${activeChatId}/clear/`, { 
         method: "POST",
-        headers: { "X-CSRFToken": csrftoken }   // ✅ Proteção CSRF
+        headers: { "X-CSRFToken": csrftoken }   
       });
       await selectChat(activeChatId);
     });
@@ -183,15 +186,27 @@
       if (confirm("Tem certeza que deseja excluir este chat?")) {
         await fetch(`/api/chats/${activeChatId}/delete/`, { 
           method: "DELETE",
-          headers: { "X-CSRFToken": csrftoken }  // ✅ Também precisa aqui
+          headers: { "X-CSRFToken": csrftoken }
         });
         activeChatId = null;
         await loadChats();
       }
     });
 
-    // Inicializar
     loadChats();
+  </script>
+  <script>
+    document.getElementById("export-pdf-btn").addEventListener("click", async () => {
+      if (!activeChatId) {
+        alert("Nenhum chat selecionado!");
+        return;
+      }
+
+      const fileName = prompt("Digite o nome do arquivo (sem .pdf):");
+      if (!fileName) return;
+
+      window.location.href = `/exportar_pdf/${activeChatId}/?filename=${encodeURIComponent(fileName)}`;
+    });
   </script>
 </body>
 </html>

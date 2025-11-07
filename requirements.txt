@@ -3,3 +3,4 @@ psycopg2-binary>=2.9
 dj-database-url>=0.5
 python-dotenv>=0.19
 openai>=0.27
+reportlab>=3.6
