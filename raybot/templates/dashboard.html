@@ -6,8 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RayBot Dashboard</title>
   <link rel="stylesheet" href="{% static 'dashboard.css' %}">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 
@@ -15,11 +13,9 @@
   <div class="layout">
     <!-- SIDEBAR -->
     <aside class="sidebar">
-      <button class="new-chat-btn">+ Nova Conversa</button>
-
-      <div class="history">
+      <button id="new-chat-btn" class="new-chat-btn">+ Nova Conversa</button>
+      <div class="history" id="history">
         <p class="sidebar-title">Histórico de Conversas</p>
-        <button class="history-item active">Chat Atual</button>
       </div>
     </aside>
 
@@ -28,9 +24,10 @@
       <header class="topbar">
         <img src="{% static 'RAYBOT.svg' %}" alt="Logo RayBot" class="logo-raybot">
         <div class="topbar-actions">
-          <button class="icon-btn">🗑 Limpar</button>
+          <button class="icon-btn" id="delete-chat-btn">🗑 Apagar Chat Atual</button>
+          <button class="icon-btn" id="clear-btn">🧹 Limpar</button>
           <button class="icon-btn">📄 Exportar PDF</button>
-          <button class="logout-btn" onclick="window.location.href='/'">⎋ Sair</button>
+          <button class="logout-btn" onclick="window.location.href='{% url 'logout' %}'">⎋ Sair</button>
         </div>
       </header>
 
@@ -38,13 +35,12 @@
       <div class="chat-area">
         <div class="chat-box" id="chat-box">
           <div class="bot-message fade-in">
-            Olá! Sou o <strong>RayBot</strong>, seu assistente de IA especializado em indicadores, insights e análises preditivas.  
-            Estou aqui para ajudá-lo a tomar decisões mais estratégicas e baseadas em seus dados.  
+            👋 Olá! Sou o RayBot, seu assistente de IA especializado em indicadores, insights e análises preditivas.
+            Estou aqui para ajudá-lo a tomar decisões mais estratégicas e baseadas em seus dados.
             Como posso ajudá-lo hoje?
           </div>
         </div>
 
-        <!-- CHAT INPUT -->
         <form id="chat-form" class="chat-input">
           <input type="text" id="user-input" placeholder="Digite sua mensagem..." required>
           <button type="submit" class="send-btn">➤</button>
@@ -54,33 +50,148 @@
   </div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const form = document.getElementById("chat-form");
-      const input = document.getElementById("user-input");
-      const chatBox = document.getElementById("chat-box");
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
 
-      form.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const message = input.value.trim();
-        if (!message) return;
+    const csrftoken = getCookie('csrftoken');
+    const chatBox = document.getElementById("chat-box");
+    const historyContainer = document.getElementById("history");
+    const form = document.getElementById("chat-form");
+    const input = document.getElementById("user-input");
+    const deleteBtn = document.getElementById("delete-chat-btn");
+    const clearBtn = document.getElementById("clear-btn");
+    let activeChatId = null;
 
-        const userMsg = document.createElement("div");
-        userMsg.className = "user-message fade-in";
-        userMsg.textContent = message;
-        chatBox.appendChild(userMsg);
+    // Carregar lista de chats
+    async function loadChats() {
+      const res = await fetch("/api/chats/");
+      const chats = await res.json();
+      historyContainer.innerHTML = '<p class="sidebar-title">Histórico de Conversas</p>';
 
-        chatBox.scrollTop = chatBox.scrollHeight;
-        input.value = "";
+      if (chats.length === 0) {
+        const newChat = await createChat("Chat Inicial");
+        activeChatId = newChat.id;
+        await loadChats();
+        return;
+      }
 
-        setTimeout(() => {
-          const botMsg = document.createElement("div");
-          botMsg.className = "bot-message fade-in";
-          botMsg.textContent = "💬 Processando sua pergunta sobre " + message + "...";
-          chatBox.appendChild(botMsg);
-          chatBox.scrollTop = chatBox.scrollHeight;
-        }, 800);
+      chats.forEach(chat => {
+        const btn = document.createElement("button");
+        btn.className = "history-item" + (chat.id === activeChatId ? " active" : "");
+        btn.textContent = chat.name;
+        btn.dataset.id = chat.id;
+        btn.addEventListener("click", () => selectChat(chat.id));
+        historyContainer.appendChild(btn);
       });
+
+      if (!activeChatId) {
+        activeChatId = chats[0].id;
+        await selectChat(activeChatId);
+      }
+    }
+
+    async function selectChat(id) {
+      activeChatId = id;
+      const res = await fetch(`/api/chats/${id}/messages/`);
+      const messages = await res.json();
+      chatBox.innerHTML = "";
+      messages.forEach(m => {
+        const msg = document.createElement("div");
+        msg.className = (m.sender === "user" ? "user-message" : "bot-message") + " fade-in";
+        msg.textContent = m.content;
+        chatBox.appendChild(msg);
+      });
+      chatBox.scrollTop = chatBox.scrollHeight;
+      await loadChats();
+    }
+
+    // Criar novo chat
+    async function createChat(name) {
+      const res = await fetch("/api/chats/new/", {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "X-CSRFToken": csrftoken    // 🔒 Necessário para Django aceitar POST
+        },
+        body: JSON.stringify({ name }),
+      });
+      return res.json();
+    }
+
+    // Enviar mensagem
+    form.addEventListener("submit", async e => {
+      e.preventDefault();
+      const message = input.value.trim();
+      if (!message || !activeChatId) return;
+      input.value = "";
+
+      const userMsg = document.createElement("div");
+      userMsg.className = "user-message fade-in";
+      userMsg.textContent = message;
+      chatBox.appendChild(userMsg);
+
+      const res = await fetch(`/api/chats/${activeChatId}/send/`, {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "X-CSRFToken": csrftoken     // ✅ Aqui também
+        },
+        body: JSON.stringify({ content: message }),
+      });
+
+      const data = await res.json();
+      const botMsg = document.createElement("div");
+      botMsg.className = "bot-message fade-in";
+      botMsg.textContent = data.reply;
+      chatBox.appendChild(botMsg);
+      chatBox.scrollTop = chatBox.scrollHeight;
     });
+
+    // Novo chat
+    document.getElementById("new-chat-btn").addEventListener("click", async () => {
+      const res = await createChat("Chat " + new Date().toLocaleString());
+      activeChatId = res.id;
+      await loadChats();
+      await selectChat(res.id);
+    });
+
+    // Limpar chat
+    clearBtn.addEventListener("click", async () => {
+      if (!activeChatId) return;
+      await fetch(`/api/chats/${activeChatId}/clear/`, { 
+        method: "POST",
+        headers: { "X-CSRFToken": csrftoken }   // ✅ Proteção CSRF
+      });
+      await selectChat(activeChatId);
+    });
+
+    // Apagar chat
+    deleteBtn.addEventListener("click", async () => {
+      if (!activeChatId) return;
+      if (confirm("Tem certeza que deseja excluir este chat?")) {
+        await fetch(`/api/chats/${activeChatId}/delete/`, { 
+          method: "DELETE",
+          headers: { "X-CSRFToken": csrftoken }  // ✅ Também precisa aqui
+        });
+        activeChatId = null;
+        await loadChats();
+      }
+    });
+
+    // Inicializar
+    loadChats();
   </script>
 </body>
 </html>

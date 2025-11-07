@@ -206,3 +206,17 @@ body {
   height: auto;
   margin-bottom: var(--spacing-4);
 }
+
+.chat-history-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#delete-chat-btn {
+  color: #f87171;
+}
+
+#delete-chat-btn:hover {
+  background: rgba(248, 113, 113, 0.1);
+}

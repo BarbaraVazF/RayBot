@@ -1,66 +1,50 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Acesso RayBot</title>
   <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
-<body>
 
+<body>
   <div class="container">
     <div class="card">
       <img src="{% static 'LogoRay.png' %}" alt="Logo Ray" class="logo">
 
-      <h2 class="welcome">Bem-Vindo ao RayBot</h2>
-      <p class="subtitle">Digite seu código de acesso para continuar</p>
+      <h2 class="welcome">Bem-vindo ao RayBot</h2>
+      <p class="subtitle">Digite seu usuário e senha para continuar</p>
 
-      <form id="accessForm" class="form">
+      <form method="POST" action="{% url 'home' %}" class="form">
+        {% csrf_token %}
+
         <input
-          type="password"
-          id="accessCode"
-          placeholder="Digite seu código de acesso"
+          type="text"
+          name="username"
+          placeholder="Usuário"
           class="input"
-          aria-label="Access Code"
           required
         />
-        <button 
-          type="submit"
-          id="accessButton"
-          class="button"
-          disabled
-        >
+
+        <input
+          type="password"
+          name="password"
+          placeholder="Senha"
+          class="input"
+          required
+        />
+
+        <button type="submit" class="button">
           Acessar RayBot
         </button>
+
+        {% if form.errors %}
+          <p style="color: red; margin-top: 10px;">Usuário ou senha inválidos.</p>
+        {% endif %}
       </form>
     </div>
   </div>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const form = document.getElementById("accessForm");
-      const input = document.getElementById("accessCode");
-      const button = document.getElementById("accessButton");
-
-      input.addEventListener("input", () => {
-        button.disabled = input.value.trim() === "";
-      });
-
-      form.addEventListener("submit", (event) => {
-        event.preventDefault();
-        const accessCode = input.value.trim();
-
-        if (accessCode === "12345") {
-          window.location.href = "/dashboard/";
-        } else {
-          alert("❌ Código de acesso inválido! Tente '12345'.");
-          input.value = "";
-          button.disabled = true;
-        }
-      });
-    });
-  </script>
 </body>
 </html>
