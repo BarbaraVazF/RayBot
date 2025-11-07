@@ -11,7 +11,6 @@
 
 <body>
   <div class="layout">
-    <!-- SIDEBAR -->
     <aside class="sidebar">
       <button id="new-chat-btn" class="new-chat-btn">+ Nova Conversa</button>
       <div class="history" id="history">
@@ -19,14 +18,11 @@
       </div>
     </aside>
 
-    <!-- MAIN CONTENT -->
     <div class="main">
       <header class="topbar">
         <img src="{% static 'RAYBOT.svg' %}" alt="Logo RayBot" class="logo-raybot">
         <div class="topbar-actions">
-          <button onclick="window.location.href='/trocar-senha/'" class="icon-btn">
-            🔑 Trocar Senha
-          </button>
+          <button onclick="window.location.href='/trocar-senha/'" class="icon-btn">🔑 Trocar Senha</button>
           <button class="icon-btn" id="delete-chat-btn">🗑 Apagar Chat Atual</button>
           <button class="icon-btn" id="clear-btn">🧹 Limpar</button>
           <button class="icon-btn" id="export-pdf-btn">📄 Exportar PDF</button>
@@ -37,7 +33,6 @@
         </div>
       </header>
 
-      <!-- CHAT AREA -->
       <div class="chat-area">
         <div class="chat-box" id="chat-box">
           <div class="bot-message fade-in">
@@ -51,6 +46,29 @@
           <input type="text" id="user-input" placeholder="Digite sua mensagem..." required>
           <button type="submit" class="send-btn">➤</button>
         </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="filePrompt" class="modal-overlay">
+    <div class="modal">
+      <h3>Exportar PDF</h3>
+      <p>Digite o nome do arquivo (sem .pdf):</p>
+      <input type="text" id="fileNameInput" placeholder="ex: conversa_raybot" />
+      <div class="modal-buttons">
+        <button id="cancelBtn" class="btn cancel">Cancelar</button>
+        <button id="confirmBtn" class="btn confirm">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="confirm-modal" class="modal-overlay">
+    <div class="modal">
+      <h3>Excluir Chat</h3>
+      <p>Tem certeza que deseja excluir este chat?</p>
+      <div class="modal-buttons">
+        <button id="cancel-delete" class="btn cancel">Cancelar</button>
+        <button id="confirm-delete" class="btn confirm">Excluir</button>
       </div>
     </div>
   </div>
@@ -80,7 +98,6 @@
     const clearBtn = document.getElementById("clear-btn");
     let activeChatId = null;
 
-    // Carregar lista de chats
     async function loadChats() {
       const res = await fetch("/api/chats/");
       const chats = await res.json();
@@ -179,32 +196,67 @@
       await selectChat(activeChatId);
     });
 
-    deleteBtn.addEventListener("click", async () => {
+    const confirmModal = document.getElementById("confirm-modal");
+    const cancelDelete = document.getElementById("cancel-delete");
+    const confirmDelete = document.getElementById("confirm-delete");
+
+    deleteBtn.addEventListener("click", () => {
       if (!activeChatId) return;
-      if (confirm("Tem certeza que deseja excluir este chat?")) {
-        await fetch(`/api/chats/${activeChatId}/delete/`, { 
-          method: "DELETE",
-          headers: { "X-CSRFToken": csrftoken }
-        });
-        activeChatId = null;
-        await loadChats();
-      }
+      confirmModal.style.display = "flex";
     });
 
-    loadChats();
-  </script>
-  <script>
+    cancelDelete.addEventListener("click", () => {
+      confirmModal.style.display = "none";
+    });
+
+    confirmDelete.addEventListener("click", async () => {
+      if (!activeChatId) return;
+      confirmModal.style.display = "none";
+
+      await fetch(`/api/chats/${activeChatId}/delete/`, { 
+        method: "DELETE",
+        headers: { "X-CSRFToken": csrftoken }
+      });
+      activeChatId = null;
+      await loadChats();
+    });
+
+    async function showFileNamePrompt() {
+      return new Promise((resolve) => {
+        const modal = document.getElementById("filePrompt");
+        const input = document.getElementById("fileNameInput");
+        const confirmBtn = document.getElementById("confirmBtn");
+        const cancelBtn = document.getElementById("cancelBtn");
+
+        modal.style.display = "flex";
+        input.value = "";
+        input.focus();
+
+        confirmBtn.onclick = () => {
+          modal.style.display = "none";
+          resolve(input.value.trim());
+        };
+
+        cancelBtn.onclick = () => {
+          modal.style.display = "none";
+          resolve(null);
+        };
+      });
+    }
+
     document.getElementById("export-pdf-btn").addEventListener("click", async () => {
       if (!activeChatId) {
         alert("Nenhum chat selecionado!");
         return;
       }
 
-      const fileName = prompt("Digite o nome do arquivo (sem .pdf):");
+      const fileName = await showFileNamePrompt();
       if (!fileName) return;
 
       window.location.href = `/exportar_pdf/${activeChatId}/?filename=${encodeURIComponent(fileName)}`;
     });
+
+    loadChats();
   </script>
 </body>
 </html>
