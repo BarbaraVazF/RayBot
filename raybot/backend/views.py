@@ -13,6 +13,8 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Flowable
 from datetime import datetime
 import urllib.parse
 from django.contrib.auth import update_session_auth_hash
+from utils.pandas_agent import carregar_dataframe, criar_agente
+from utils.prompts import gerar_prompt
 
 def home(request):
     if request.method == "POST":
@@ -58,11 +60,27 @@ def send_message(request, chat_id):
     if request.method == "POST":
         chat = get_object_or_404(Chat, id=chat_id, user=request.user)
         data = json.loads(request.body)
-        content = data.get("content")
-        Message.objects.create(chat=chat, sender="user", content=content)
-        bot_reply = f"💬 Processando sua pergunta sobre {content}..."
-        Message.objects.create(chat=chat, sender="bot", content=bot_reply)
-        return JsonResponse({"reply": bot_reply})
+        pergunta = data.get("content")
+        # Salvar pergunta do usuário
+        Message.objects.create(chat=chat, sender="user", content=pergunta)
+        # ==== Carregar dataframe e agente ====
+        df = carregar_dataframe()
+        agente = criar_agente(df)
+        # ==== Capturar histórico ====
+        historico = list(
+            chat.messages.filter(sender="user").values_list("content", flat=True)
+        )
+        # ==== Criar prompt ====
+        prompt = gerar_prompt(pergunta, historico, df)
+        # ==== Rodar análise ====
+        try:
+            resposta = agente.invoke({"input": prompt})
+            bot_texto = resposta.get("output", "Não consegui processar sua solicitação.")
+        except Exception as e:
+            bot_texto = f"❌ Erro ao analisar os dados: {str(e)}"
+        # ==== Salvar resposta ====
+        Message.objects.create(chat=chat, sender="bot", content=bot_texto)
+        return JsonResponse({"reply": bot_texto})
 
 @login_required
 def delete_chat(request, chat_id):
