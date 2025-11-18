@@ -6,7 +6,9 @@ import os
 
 load_dotenv()
 
-ARQUIVO_CSV = "dados_carros.csv"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+ARQUIVO_CSV = os.path.join(BASE_DIR, "dados_carros.csv")
+
 MODELO_LLM = "gpt-4o-mini"
 
 

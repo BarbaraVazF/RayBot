@@ -1,0 +1,201 @@
+ID Venda,Data Venda,Marca Veículo,Modelo Veículo,Ano Modelo,Preço Compra (R$),Preço Venda (R$),Forma Pagamento,Vendedor,Cidade Cliente
+1,2025-04-13,BMW,BMW 320i,2025,"262.500,00","321.900,00",Financiamento,Maria Oliveira,Belo Horizonte
+2,2025-03-29,Chevrolet,Chevrolet Tracker,2024,"96.300,00","119.500,00",Consórcio,João Santos,Recife
+3,2025-10-04,Fiat,Fiat Argo,2024,"59.400,00","70.500,00",Financiamento,Maria Oliveira,Fortaleza
+4,2025-06-19,Mercedes-Benz,Mercedes-Benz C 180,2024,"220.900,00","256.300,00",Financiamento,Pedro Costa,Recife
+5,2025-05-11,Toyota,Toyota Corolla,2025,"118.400,00","146.800,00",Troca + Financiamento,Pedro Costa,Salvador
+6,2025-08-30,Volkswagen,Volkswagen T-Cross,2024,"104.600,00","126.900,00",Consórcio,Pedro Costa,Porto Alegre
+7,2025-09-21,BMW,BMW 320i,2024,"251.500,00","307.400,00",Consórcio,João Santos,Curitiba
+8,2025-11-06,Jeep,Jeep Renegade,2025,"121.500,00","141.300,00",Troca + Financiamento,Pedro Costa,São Paulo
+9,2025-07-09,Hyundai,Hyundai Creta,2025,"113.100,00","132.400,00",À Vista,Ana Silva,Curitiba
+10,2025-07-07,Jeep,Jeep Compass,2024,"163.200,00","202.100,00",Troca + Financiamento,Ana Silva,Curitiba
+11,2025-05-16,Honda,Honda HR-V,2024,"133.000,00","151.300,00",À Vista,João Santos,Fortaleza
+12,2025-02-10,Hyundai,Hyundai HB20,2025,"64.000,00","79.000,00",Financiamento,Lucas Ferreira,Belo Horizonte
+13,2025-06-21,Hyundai,Hyundai Creta,2024,"106.300,00","126.800,00",Troca + Financiamento,Maria Oliveira,São Paulo
+14,2025-01-05,Renault,Renault Kwid,2024,"47.000,00","58.600,00",Financiamento,Ana Silva,Curitiba
+15,2025-04-06,Chevrolet,Chevrolet Tracker,2025,"90.400,00","107.500,00",Consórcio,Pedro Costa,Porto Alegre
+16,2025-06-09,Hyundai,Hyundai HB20,2024,"65.400,00","73.200,00",Troca + Financiamento,Ana Silva,Porto Alegre
+17,2025-05-14,Jeep,Jeep Renegade,2024,"120.600,00","141.200,00",Troca + Financiamento,Pedro Costa,São Paulo
+18,2025-08-19,Fiat,Fiat Argo,2024,"58.400,00","73.000,00",Financiamento,Maria Oliveira,Fortaleza
+19,2025-07-17,Hyundai,Hyundai Creta,2025,"108.200,00","124.500,00",Financiamento,Maria Oliveira,Salvador
+20,2025-06-09,Volkswagen,Volkswagen T-Cross,2025,"100.600,00","121.900,00",Financiamento,João Santos,Belo Horizonte
+21,2025-04-23,Toyota,Toyota Corolla,2024,"121.800,00","141.500,00",À Vista,Lucas Ferreira,Recife
+22,2025-08-13,Fiat,Fiat Argo,2024,"53.400,00","62.900,00",Troca + Financiamento,Pedro Costa,Fortaleza
+23,2025-07-22,Ford,Ford Ranger,2025,"198.000,00","229.400,00",À Vista,Maria Oliveira,Fortaleza
+24,2025-08-28,Mercedes-Benz,Mercedes-Benz C 180,2025,"223.100,00","272.500,00",Financiamento,Pedro Costa,Curitiba
+25,2025-12-12,Chevrolet,Chevrolet Onix,2025,"63.700,00","78.700,00",Troca + Financiamento,João Santos,Recife
+26,2025-05-09,Honda,Honda HR-V,2024,"119.100,00","133.400,00",Troca + Financiamento,Maria Oliveira,Fortaleza
+27,2025-09-09,Mercedes-Benz,Mercedes-Benz C 180,2025,"246.400,00","288.900,00",Financiamento,Pedro Costa,Porto Alegre
+28,2025-02-06,Volkswagen,Volkswagen T-Cross,2024,"124.700,00","141.000,00",Troca + Financiamento,Ana Silva,Recife
+29,2025-04-26,Honda,Honda HR-V,2025,"133.200,00","153.600,00",À Vista,Ana Silva,Belo Horizonte
+30,2025-06-02,Renault,Renault Kwid,2024,"51.800,00","63.000,00",Consórcio,Ana Silva,Salvador
+31,2025-10-04,Mercedes-Benz,Mercedes-Benz C 180,2025,"261.500,00","295.500,00",Consórcio,Ana Silva,Recife
+32,2025-01-22,Renault,Renault Kwid,2024,"53.200,00","59.700,00",À Vista,Lucas Ferreira,Salvador
+33,2025-04-07,BMW,BMW 320i,2025,"256.200,00","293.700,00",Financiamento,Maria Oliveira,Recife
+34,2025-02-18,Ford,Ford Ranger,2025,"196.700,00","237.600,00",Troca + Financiamento,Pedro Costa,São Paulo
+35,2025-02-06,Ford,Ford Ranger,2025,"220.700,00","245.800,00",Financiamento,Lucas Ferreira,Porto Alegre
+36,2025-06-10,Chevrolet,Chevrolet Onix,2024,"75.000,00","83.900,00",Consórcio,João Santos,Recife
+37,2025-12-08,Fiat,Fiat Mobi,2023,"54.400,00","61.500,00",Financiamento,Lucas Ferreira,Rio de Janeiro
+38,2025-09-04,Chevrolet,Chevrolet Onix,2024,"68.900,00","85.300,00",Financiamento,Pedro Costa,Porto Alegre
+39,2025-01-20,Fiat,Fiat Argo,2024,"54.700,00","67.900,00",Troca + Financiamento,Pedro Costa,Rio de Janeiro
+40,2025-11-18,Ford,Ford Ranger,2024,"222.200,00","265.800,00",Financiamento,Ana Silva,Recife
+41,2025-02-22,Jeep,Jeep Renegade,2025,"111.400,00","126.000,00",Financiamento,Maria Oliveira,Fortaleza
+42,2025-11-04,Mercedes-Benz,Mercedes-Benz C 180,2025,"238.100,00","286.100,00",Consórcio,Maria Oliveira,Curitiba
+43,2025-02-27,Toyota,Toyota Corolla,2024,"120.700,00","143.200,00",Consórcio,Ana Silva,Rio de Janeiro
+44,2025-05-02,Fiat,Fiat Argo,2025,"52.400,00","64.800,00",Financiamento,Lucas Ferreira,Porto Alegre
+45,2025-09-29,Hyundai,Hyundai HB20,2025,"68.700,00","78.700,00",Financiamento,João Santos,Recife
+46,2025-03-27,Renault,Renault Kwid,2023,"50.500,00","56.200,00",Financiamento,João Santos,Rio de Janeiro
+47,2025-12-07,Hyundai,Hyundai HB20,2024,"68.600,00","79.300,00",Financiamento,Lucas Ferreira,Curitiba
+48,2025-10-17,Volkswagen,Volkswagen Nivus,2025,"113.000,00","127.600,00",Consórcio,Pedro Costa,Recife
+49,2025-10-07,Mercedes-Benz,Mercedes-Benz C 180,2025,"216.300,00","251.900,00",Troca + Financiamento,Pedro Costa,Rio de Janeiro
+50,2025-06-12,Fiat,Fiat Argo,2025,"63.400,00","70.900,00",Financiamento,Ana Silva,Recife
+51,2025-11-26,Honda,Honda HR-V,2024,"107.000,00","132.100,00",Financiamento,Maria Oliveira,Rio de Janeiro
+52,2025-02-04,Ford,Ford Ranger,2025,"200.400,00","230.800,00",Financiamento,Maria Oliveira,São Paulo
+53,2025-07-15,Jeep,Jeep Compass,2025,"144.500,00","171.600,00",Troca + Financiamento,Pedro Costa,Rio de Janeiro
+54,2025-12-23,Volkswagen,Volkswagen T-Cross,2025,"119.900,00","137.300,00",Financiamento,Ana Silva,Fortaleza
+55,2025-04-06,Toyota,Toyota Corolla,2024,"146.100,00","167.200,00",Financiamento,Ana Silva,São Paulo
+56,2025-03-03,Mercedes-Benz,Mercedes-Benz C 180,2024,"219.300,00","270.800,00",Financiamento,Lucas Ferreira,São Paulo
+57,2025-03-17,Volkswagen,Volkswagen T-Cross,2024,"132.900,00","148.500,00",À Vista,Lucas Ferreira,Porto Alegre
+58,2025-04-09,Jeep,Jeep Renegade,2024,"116.800,00","133.500,00",Consórcio,Ana Silva,Fortaleza
+59,2025-04-19,Volkswagen,Volkswagen Nivus,2025,"112.700,00","139.900,00",Consórcio,Lucas Ferreira,Belo Horizonte
+60,2025-11-27,BMW,BMW 320i,2024,"287.200,00","333.300,00",Financiamento,Lucas Ferreira,Recife
+61,2025-06-19,Volkswagen,Volkswagen T-Cross,2025,"114.100,00","141.200,00",Financiamento,Maria Oliveira,Recife
+62,2025-12-31,Fiat,Fiat Argo,2025,"57.600,00","64.700,00",À Vista,Pedro Costa,Salvador
+63,2025-09-09,Jeep,Jeep Renegade,2025,"111.200,00","124.800,00",Financiamento,Maria Oliveira,Porto Alegre
+64,2025-05-21,Hyundai,Hyundai Creta,2024,"113.300,00","129.500,00",À Vista,Ana Silva,Fortaleza
+65,2025-11-08,Fiat,Fiat Argo,2024,"63.500,00","79.300,00",Troca + Financiamento,Lucas Ferreira,Fortaleza
+66,2025-05-29,Mercedes-Benz,Mercedes-Benz C 180,2025,"258.000,00","319.500,00",À Vista,Pedro Costa,São Paulo
+67,2025-02-16,Volkswagen,Volkswagen T-Cross,2024,"115.900,00","128.800,00",Consórcio,Maria Oliveira,Recife
+68,2025-01-12,Volkswagen,Volkswagen Nivus,2025,"116.100,00","137.300,00",À Vista,João Santos,Curitiba
+69,2025-06-13,Hyundai,Hyundai Creta,2024,"103.000,00","127.500,00",Troca + Financiamento,Maria Oliveira,Salvador
+70,2025-05-25,Volkswagen,Volkswagen T-Cross,2024,"125.400,00","144.400,00",Financiamento,Maria Oliveira,Porto Alegre
+71,2025-03-23,Toyota,Toyota Corolla,2025,"140.000,00","156.700,00",Troca + Financiamento,Lucas Ferreira,Porto Alegre
+72,2025-04-29,Fiat,Fiat Argo,2025,"62.500,00","69.600,00",Financiamento,João Santos,Fortaleza
+73,2025-08-05,Ford,Ford Ranger,2025,"199.900,00","237.500,00",Financiamento,Pedro Costa,São Paulo
+74,2025-07-16,Toyota,Toyota Corolla,2025,"142.200,00","162.200,00",Troca + Financiamento,João Santos,Belo Horizonte
+75,2025-05-25,Renault,Renault Kwid,2023,"45.600,00","55.500,00",Troca + Financiamento,João Santos,Curitiba
+76,2025-04-05,Hyundai,Hyundai Creta,2024,"105.900,00","124.900,00",Troca + Financiamento,João Santos,Curitiba
+77,2025-02-23,Jeep,Jeep Renegade,2025,"118.200,00","140.700,00",Financiamento,Lucas Ferreira,Porto Alegre
+78,2025-03-07,Honda,Honda HR-V,2024,"107.500,00","134.100,00",Financiamento,João Santos,Rio de Janeiro
+79,2025-10-13,BMW,BMW 320i,2025,"286.600,00","343.300,00",À Vista,Pedro Costa,Salvador
+80,2025-09-04,Volkswagen,Volkswagen Nivus,2025,"113.000,00","138.700,00",Troca + Financiamento,João Santos,São Paulo
+81,2025-12-06,Toyota,Toyota Corolla,2025,"133.000,00","159.700,00",À Vista,Maria Oliveira,Belo Horizonte
+82,2025-04-21,Mercedes-Benz,Mercedes-Benz C 180,2024,"224.400,00","259.700,00",Financiamento,Ana Silva,Belo Horizonte
+83,2025-12-18,Chevrolet,Chevrolet Onix,2025,"81.100,00","94.300,00",Financiamento,Lucas Ferreira,Porto Alegre
+84,2025-04-02,Volkswagen,Volkswagen Nivus,2024,"95.200,00","117.200,00",À Vista,João Santos,Salvador
+85,2025-02-03,Ford,Ford Ranger,2025,"205.200,00","255.200,00",Consórcio,Ana Silva,Salvador
+86,2025-08-27,Honda,Honda HR-V,2025,"109.100,00","131.800,00",Troca + Financiamento,Ana Silva,Belo Horizonte
+87,2025-09-10,BMW,BMW 320i,2025,"283.900,00","344.700,00",Consórcio,João Santos,Porto Alegre
+88,2025-06-03,Renault,Renault Kwid,2023,"56.300,00","63.700,00",Consórcio,Pedro Costa,Porto Alegre
+89,2025-10-01,Toyota,Toyota Hilux,2025,"198.000,00","239.400,00",Financiamento,João Santos,Fortaleza
+90,2025-09-30,Hyundai,Hyundai HB20,2024,"66.400,00","80.700,00",Financiamento,Ana Silva,Curitiba
+91,2025-03-08,Volkswagen,Volkswagen T-Cross,2025,"104.700,00","122.600,00",À Vista,Ana Silva,Curitiba
+92,2025-03-24,Volkswagen,Volkswagen Nivus,2024,"107.300,00","124.100,00",À Vista,Maria Oliveira,Porto Alegre
+93,2025-08-17,Fiat,Fiat Argo,2024,"54.000,00","64.500,00",À Vista,Maria Oliveira,Salvador
+94,2025-11-14,Volkswagen,Volkswagen T-Cross,2024,"114.100,00","135.700,00",Troca + Financiamento,João Santos,Curitiba
+95,2025-08-08,Honda,Honda HR-V,2025,"127.600,00","154.500,00",Financiamento,Maria Oliveira,Salvador
+96,2025-07-13,BMW,BMW 320i,2025,"277.000,00","313.400,00",Financiamento,João Santos,Salvador
+97,2025-11-20,Fiat,Fiat Argo,2025,"61.500,00","70.600,00",Consórcio,Lucas Ferreira,Salvador
+98,2025-05-19,Chevrolet,Chevrolet Tracker,2024,"98.600,00","117.800,00",À Vista,Lucas Ferreira,Fortaleza
+99,2025-05-18,Jeep,Jeep Renegade,2024,"108.400,00","134.000,00",Financiamento,Ana Silva,São Paulo
+100,2025-09-22,Honda,Honda HR-V,2025,"130.300,00","148.200,00",Financiamento,Lucas Ferreira,Salvador
+101,2025-08-24,Renault,Renault Kwid,2024,"45.300,00","54.100,00",Troca + Financiamento,Pedro Costa,Recife
+102,2025-12-15,Hyundai,Hyundai Creta,2025,"116.600,00","132.500,00",Troca + Financiamento,Lucas Ferreira,Porto Alegre
+103,2025-12-05,Renault,Renault Kwid,2024,"56.600,00","67.500,00",Troca + Financiamento,Maria Oliveira,Porto Alegre
+104,2025-12-19,BMW,BMW 320i,2025,"255.900,00","304.900,00",À Vista,Lucas Ferreira,Recife
+105,2025-04-14,Hyundai,Hyundai HB20,2024,"76.600,00","88.800,00",Financiamento,Pedro Costa,Fortaleza
+106,2025-04-21,Fiat,Fiat Argo,2025,"68.500,00","77.900,00",Financiamento,Ana Silva,Porto Alegre
+107,2025-10-16,Chevrolet,Chevrolet Tracker,2025,"109.100,00","122.900,00",Financiamento,Lucas Ferreira,Fortaleza
+108,2025-10-30,Chevrolet,Chevrolet Tracker,2025,"100.400,00","118.100,00",À Vista,Lucas Ferreira,Fortaleza
+109,2025-11-20,Jeep,Jeep Renegade,2025,"94.900,00","110.400,00",À Vista,João Santos,Belo Horizonte
+110,2025-10-10,Toyota,Toyota Corolla,2025,"148.800,00","178.400,00",Financiamento,João Santos,Salvador
+111,2025-12-29,Jeep,Jeep Renegade,2025,"93.100,00","114.900,00",Financiamento,Pedro Costa,Belo Horizonte
+112,2025-12-22,Mercedes-Benz,Mercedes-Benz C 180,2025,"273.900,00","314.600,00",Financiamento,Pedro Costa,Fortaleza
+113,2025-02-20,Renault,Renault Kwid,2024,"47.900,00","59.000,00",Troca + Financiamento,Pedro Costa,Salvador
+114,2025-11-09,Fiat,Fiat Argo,2025,"60.500,00","70.400,00",Financiamento,Ana Silva,Porto Alegre
+115,2025-05-17,Volkswagen,Volkswagen Nivus,2025,"95.900,00","115.100,00",Financiamento,Ana Silva,Rio de Janeiro
+116,2025-03-16,Toyota,Toyota Hilux,2024,"216.500,00","247.800,00",À Vista,Maria Oliveira,Belo Horizonte
+117,2025-12-30,Hyundai,Hyundai HB20,2024,"58.800,00","70.700,00",Consórcio,Maria Oliveira,Salvador
+118,2025-06-03,Ford,Ford Ranger,2024,"225.600,00","276.900,00",À Vista,Pedro Costa,Fortaleza
+119,2025-07-08,Hyundai,Hyundai Creta,2025,"103.200,00","127.900,00",Consórcio,Maria Oliveira,Recife
+120,2025-07-30,Ford,Ford Ranger,2024,"203.700,00","237.800,00",Financiamento,Maria Oliveira,Fortaleza
+121,2025-07-13,Ford,Ford Ranger,2025,"199.600,00","244.800,00",Financiamento,Lucas Ferreira,Fortaleza
+122,2025-12-25,Chevrolet,Chevrolet Onix,2024,"66.400,00","76.800,00",À Vista,Pedro Costa,Recife
+123,2025-06-27,Hyundai,Hyundai HB20,2025,"58.000,00","70.500,00",Financiamento,Maria Oliveira,Fortaleza
+124,2025-11-24,BMW,BMW 320i,2025,"292.700,00","342.100,00",Consórcio,Maria Oliveira,Recife
+125,2025-03-29,Renault,Renault Kwid,2024,"62.000,00","69.300,00",Financiamento,João Santos,Fortaleza
+126,2025-11-26,Hyundai,Hyundai HB20,2025,"70.700,00","87.000,00",Troca + Financiamento,Lucas Ferreira,Curitiba
+127,2025-03-23,Fiat,Fiat Mobi,2024,"54.500,00","61.700,00",Financiamento,Pedro Costa,Curitiba
+128,2025-09-18,Toyota,Toyota Corolla,2025,"136.700,00","162.100,00",Financiamento,Pedro Costa,Rio de Janeiro
+129,2025-12-08,Jeep,Jeep Renegade,2024,"119.200,00","140.400,00",Troca + Financiamento,Ana Silva,Rio de Janeiro
+130,2025-04-25,Ford,Ford Ranger,2024,"210.100,00","243.300,00",Financiamento,Maria Oliveira,Salvador
+131,2025-01-04,Jeep,Jeep Compass,2025,"174.100,00","197.300,00",À Vista,João Santos,Curitiba
+132,2025-02-10,Toyota,Toyota Hilux,2024,"214.500,00","252.400,00",Consórcio,Lucas Ferreira,Rio de Janeiro
+133,2025-12-08,Toyota,Toyota Hilux,2025,"207.300,00","240.100,00",À Vista,João Santos,Porto Alegre
+134,2025-07-09,Renault,Renault Kwid,2023,"52.400,00","64.800,00",À Vista,João Santos,Porto Alegre
+135,2025-05-29,Honda,Honda HR-V,2024,"122.700,00","140.700,00",Financiamento,Maria Oliveira,Salvador
+136,2025-04-08,BMW,BMW 320i,2025,"245.600,00","289.500,00",Financiamento,Pedro Costa,Belo Horizonte
+137,2025-08-15,Honda,Honda HR-V,2025,"129.400,00","158.700,00",À Vista,João Santos,Porto Alegre
+138,2025-03-14,Volkswagen,Volkswagen T-Cross,2024,"115.300,00","132.400,00",À Vista,Ana Silva,Fortaleza
+139,2025-10-18,Chevrolet,Chevrolet Onix,2024,"62.900,00","70.100,00",Financiamento,Pedro Costa,Belo Horizonte
+140,2025-04-11,Jeep,Jeep Renegade,2025,"126.300,00","143.700,00",Consórcio,Ana Silva,Fortaleza
+141,2025-01-12,Mercedes-Benz,Mercedes-Benz C 180,2025,"265.300,00","301.300,00",Consórcio,Ana Silva,Rio de Janeiro
+142,2025-03-30,Jeep,Jeep Renegade,2024,"129.300,00","144.600,00",Financiamento,João Santos,Recife
+143,2025-07-18,Ford,Ford Ranger,2024,"218.800,00","245.400,00",Financiamento,Lucas Ferreira,Fortaleza
+144,2025-05-17,Mercedes-Benz,Mercedes-Benz C 180,2024,"245.800,00","279.500,00",Consórcio,Pedro Costa,Fortaleza
+145,2025-04-13,Ford,Ford Ranger,2025,"196.200,00","229.200,00",À Vista,Maria Oliveira,Porto Alegre
+146,2025-06-20,Hyundai,Hyundai Creta,2025,"104.700,00","122.100,00",Troca + Financiamento,Pedro Costa,Porto Alegre
+147,2025-07-29,Fiat,Fiat Argo,2025,"59.500,00","72.300,00",Financiamento,João Santos,Rio de Janeiro
+148,2025-09-08,Jeep,Jeep Compass,2025,"182.700,00","207.600,00",Troca + Financiamento,Pedro Costa,Porto Alegre
+149,2025-11-14,Jeep,Jeep Renegade,2025,"126.300,00","140.600,00",Consórcio,Ana Silva,Fortaleza
+150,2025-12-25,Toyota,Toyota Corolla,2025,"118.600,00","140.100,00",Financiamento,João Santos,Curitiba
+151,2025-05-26,Toyota,Toyota Corolla,2024,"126.500,00","140.700,00",À Vista,Ana Silva,São Paulo
+152,2025-12-10,Chevrolet,Chevrolet Tracker,2024,"112.900,00","128.500,00",Financiamento,Maria Oliveira,Salvador
+153,2025-11-29,Fiat,Fiat Mobi,2024,"53.300,00","59.600,00",À Vista,Lucas Ferreira,Belo Horizonte
+154,2025-11-26,Honda,Honda HR-V,2024,"111.800,00","136.600,00",Consórcio,Lucas Ferreira,Porto Alegre
+155,2025-02-23,BMW,BMW 320i,2024,"271.900,00","316.300,00",À Vista,Maria Oliveira,Rio de Janeiro
+156,2025-06-27,Ford,Ford Ranger,2024,"218.200,00","265.300,00",Financiamento,Ana Silva,São Paulo
+157,2025-03-09,Renault,Renault Kwid,2024,"47.800,00","57.800,00",À Vista,Maria Oliveira,São Paulo
+158,2025-08-14,Jeep,Jeep Renegade,2024,"108.500,00","121.500,00",Consórcio,João Santos,Recife
+159,2025-05-04,BMW,BMW 320i,2024,"264.600,00","328.700,00",À Vista,Lucas Ferreira,Curitiba
+160,2025-06-25,Jeep,Jeep Compass,2025,"169.100,00","209.700,00",Troca + Financiamento,Lucas Ferreira,Belo Horizonte
+161,2025-07-05,Chevrolet,Chevrolet Onix,2024,"74.500,00","87.000,00",Financiamento,Maria Oliveira,Recife
+162,2025-06-17,Fiat,Fiat Argo,2024,"52.700,00","63.200,00",Financiamento,Lucas Ferreira,Rio de Janeiro
+163,2025-12-22,Toyota,Toyota Hilux,2024,"260.300,00","290.500,00",À Vista,João Santos,Rio de Janeiro
+164,2025-06-09,Honda,Honda HR-V,2024,"125.900,00","157.300,00",À Vista,Lucas Ferreira,Porto Alegre
+165,2025-01-12,Hyundai,Hyundai HB20,2024,"59.700,00","71.700,00",À Vista,João Santos,Curitiba
+166,2025-12-10,Jeep,Jeep Compass,2025,"152.700,00","174.300,00",À Vista,João Santos,Fortaleza
+167,2025-03-01,BMW,BMW 320i,2025,"256.700,00","287.200,00",Consórcio,João Santos,Curitiba
+168,2025-08-07,Ford,Ford Ranger,2025,"217.500,00","256.700,00",Financiamento,Maria Oliveira,Rio de Janeiro
+169,2025-11-02,Renault,Renault Kwid,2024,"52.800,00","65.000,00",Consórcio,Lucas Ferreira,Belo Horizonte
+170,2025-02-02,Toyota,Toyota Hilux,2024,"235.600,00","285.500,00",Financiamento,João Santos,Salvador
+171,2025-08-14,Chevrolet,Chevrolet Tracker,2025,"92.700,00","113.500,00",Consórcio,Lucas Ferreira,Belo Horizonte
+172,2025-10-15,Fiat,Fiat Mobi,2023,"51.100,00","57.600,00",Troca + Financiamento,Pedro Costa,Porto Alegre
+173,2025-01-21,BMW,BMW 320i,2025,"272.700,00","324.700,00",Financiamento,Maria Oliveira,Belo Horizonte
+174,2025-09-14,Toyota,Toyota Hilux,2024,"190.300,00","237.000,00",Consórcio,Pedro Costa,Rio de Janeiro
+175,2025-09-28,Jeep,Jeep Renegade,2025,"117.800,00","143.900,00",Troca + Financiamento,Lucas Ferreira,Recife
+176,2025-03-20,Renault,Renault Kwid,2023,"54.700,00","65.900,00",Troca + Financiamento,João Santos,Belo Horizonte
+177,2025-02-15,BMW,BMW 320i,2025,"234.200,00","288.200,00",Consórcio,Pedro Costa,São Paulo
+178,2025-06-15,Mercedes-Benz,Mercedes-Benz C 180,2025,"218.400,00","254.500,00",Financiamento,Maria Oliveira,Recife
+179,2025-07-24,Ford,Ford Ranger,2024,"172.700,00","205.800,00",À Vista,Maria Oliveira,Porto Alegre
+180,2025-08-05,Fiat,Fiat Argo,2025,"68.200,00","78.200,00",Consórcio,Ana Silva,São Paulo
+181,2025-03-17,Renault,Renault Kwid,2024,"54.300,00","62.400,00",À Vista,João Santos,Curitiba
+182,2025-12-19,Fiat,Fiat Mobi,2024,"50.000,00","56.700,00",Financiamento,João Santos,Salvador
+183,2025-12-25,Renault,Renault Kwid,2024,"44.000,00","50.800,00",Troca + Financiamento,Lucas Ferreira,Belo Horizonte
+184,2025-05-03,Toyota,Toyota Hilux,2025,"231.900,00","269.300,00",Financiamento,Pedro Costa,Recife
+185,2025-11-24,BMW,BMW 320i,2025,"254.000,00","285.600,00",À Vista,João Santos,Salvador
+186,2025-01-03,Volkswagen,Volkswagen T-Cross,2024,"116.200,00","133.200,00",À Vista,Pedro Costa,Porto Alegre
+187,2025-01-25,Jeep,Jeep Compass,2025,"155.200,00","183.200,00",Consórcio,Lucas Ferreira,Fortaleza
+188,2025-11-05,Jeep,Jeep Renegade,2025,"111.200,00","135.200,00",Troca + Financiamento,Ana Silva,Belo Horizonte
+189,2025-05-11,Volkswagen,Volkswagen Nivus,2025,"101.400,00","120.500,00",Financiamento,Pedro Costa,São Paulo
+190,2025-12-16,Toyota,Toyota Corolla,2024,"139.100,00","154.800,00",Financiamento,Ana Silva,Belo Horizonte
+191,2025-04-06,Volkswagen,Volkswagen T-Cross,2025,"120.300,00","141.800,00",Troca + Financiamento,João Santos,Curitiba
+192,2025-09-19,Hyundai,Hyundai HB20,2024,"72.900,00","81.800,00",Financiamento,Lucas Ferreira,Rio de Janeiro
+193,2025-02-09,BMW,BMW 320i,2024,"281.000,00","334.300,00",À Vista,João Santos,Curitiba
+194,2025-01-14,Renault,Renault Kwid,2024,"43.400,00","51.400,00",Financiamento,Lucas Ferreira,Fortaleza
+195,2025-01-14,Hyundai,Hyundai HB20,2024,"66.900,00","81.900,00",Financiamento,Ana Silva,Curitiba
+196,2025-03-07,Chevrolet,Chevrolet Onix,2025,"68.500,00","78.100,00",Financiamento,Lucas Ferreira,Fortaleza
+197,2025-10-30,Honda,Honda HR-V,2025,"119.400,00","143.300,00",À Vista,Pedro Costa,Salvador
+198,2025-12-27,Fiat,Fiat Argo,2025,"64.300,00","71.800,00",Financiamento,Pedro Costa,Curitiba
+199,2025-05-01,Honda,Honda HR-V,2025,"127.000,00","149.900,00",Troca + Financiamento,Pedro Costa,Recife
+200,2025-06-05,BMW,BMW 320i,2025,"238.800,00","294.400,00",Financiamento,João Santos,São Paulo
