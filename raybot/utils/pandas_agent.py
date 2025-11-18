@@ -1,22 +1,25 @@
 import pandas as pd
 from dotenv import load_dotenv
+from sqlalchemy import create_engine
 from langchain_openai import ChatOpenAI
 from langchain_experimental.agents.agent_toolkits import create_pandas_dataframe_agent
 import os
 
 load_dotenv()
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-ARQUIVO_CSV = os.path.join(BASE_DIR, "dados_carros.csv")
-
+DATABASE_URL = os.getenv("DATABASE_URL")
 MODELO_LLM = "gpt-4o-mini"
 
-
 def carregar_dataframe():
-    try:
-        df = pd.read_csv(ARQUIVO_CSV, encoding="utf-8")
-    except (UnicodeDecodeError, FileNotFoundError):
-        df = pd.read_csv(ARQUIVO_CSV, encoding="latin1")
+    if not DATABASE_URL:
+        raise ValueError("DATABASE_URL não foi encontrada no .env")
+
+    engine = create_engine(DATABASE_URL)
+
+    query = "SELECT * FROM meta_insights_geral;"
+
+    df = pd.read_sql(query, engine)
+
     return df
 
 
