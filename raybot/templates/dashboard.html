@@ -104,9 +104,12 @@
       historyContainer.innerHTML = '<p class="sidebar-title">Histórico de Conversas</p>';
 
       if (chats.length === 0) {
-        const newChat = await createChat("Chat Inicial");
-        activeChatId = newChat.id;
-        await loadChats();
+        chatBox.innerHTML = `
+          <div class="bot-message fade-in">
+            Nenhuma conversa ainda. Clique em <b>+ Nova Conversa</b> para começar.
+          </div>
+        `;
+        activeChatId = null;
         return;
       }
 
@@ -163,21 +166,31 @@
       userMsg.textContent = message;
       chatBox.appendChild(userMsg);
 
+      const typing = document.createElement("div");
+      typing.className = "bot-message typing-indicator";
+      typing.textContent = "RayBot está processando...";
+      chatBox.appendChild(typing);
+      chatBox.scrollTop = chatBox.scrollHeight;
+
       const res = await fetch(`/api/chats/${activeChatId}/send/`, {
-        method: "POST",
-        headers: { 
-          "Content-Type": "application/json",
-          "X-CSRFToken": csrftoken     
-        },
-        body: JSON.stringify({ content: message }),
+          method: "POST",
+          headers: { 
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrftoken     
+          },
+          body: JSON.stringify({ content: message }),
       });
 
       const data = await res.json();
+
+      typing.remove();
+
       const botMsg = document.createElement("div");
       botMsg.className = "bot-message fade-in";
       botMsg.textContent = data.reply;
       chatBox.appendChild(botMsg);
       chatBox.scrollTop = chatBox.scrollHeight;
+
     });
 
     document.getElementById("new-chat-btn").addEventListener("click", async () => {

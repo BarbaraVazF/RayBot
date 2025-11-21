@@ -304,3 +304,18 @@ body {
 .btn.confirm:hover {
   opacity: 0.9;
 }
+
+.typing-indicator {
+  font-style: italic;
+  opacity: 0.6;
+  margin: 8px 0;
+}
+
+.typing-indicator::after {
+  content: " ...";
+  animation: blink 1s infinite steps(1);
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
