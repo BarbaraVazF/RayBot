@@ -13,7 +13,7 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Flowable
 from datetime import datetime
 import urllib.parse
 from django.contrib.auth import update_session_auth_hash
-from utils.pandas_agent import carregar_dataframe, criar_agente
+from utils.pandas_agent import carregar_multiplas_tabelas, criar_agente_multiplas_tabelas
 from utils.prompts import gerar_prompt
 
 def home(request):
@@ -64,14 +64,23 @@ def send_message(request, chat_id):
         # Salvar pergunta do usuário
         Message.objects.create(chat=chat, sender="user", content=pergunta)
         # ==== Carregar dataframe e agente ====
-        df = carregar_dataframe()
-        agente = criar_agente(df)
+        tabelas = [
+            "meta_insights_geral",
+            "meta_insights_regiao",
+            "meta_insights_genero_idade",
+            "google_ads_geral",
+            "google_ads_regiao",
+            "google_ads_genero",
+        ]
+
+        lista_dfs = carregar_multiplas_tabelas(tabelas)
+        agente = criar_agente_multiplas_tabelas(lista_dfs)
         # ==== Capturar histórico ====
         historico = list(
             chat.messages.filter(sender="user").values_list("content", flat=True)
         )
         # ==== Criar prompt ====
-        prompt = gerar_prompt(pergunta, historico, df)
+        prompt = gerar_prompt(pergunta, historico, lista_dfs)
         # ==== Rodar análise ====
         try:
             resposta = agente.invoke({"input": prompt})
