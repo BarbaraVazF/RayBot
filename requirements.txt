@@ -5,3 +5,10 @@ python-dotenv>=0.19
 openai>=0.27
 reportlab>=3.6
 psycopg2>=2.9
+
+langchain
+langchain-community
+langchain-openai
+chromadb
+pypdf
+tiktoken

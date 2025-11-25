@@ -1,4 +1,49 @@
-def gerar_prompt(pergunta, historico, lista_dfs):
+def carregar_documentacao_pdf(padrao_arquivos="documentacao/*.pdf"):
+    arquivos = glob.glob(padrao_arquivos)
+
+    if not arquivos:
+        print("⚠️ Nenhum PDF encontrado em 'documentacao/'. RAG ficará desativado.")
+        return None
+
+    documentos = []
+    for arq in arquivos:
+        try:
+            loader = PyPDFLoader(arq)
+            documentos.extend(loader.load())
+        except Exception as e:
+            print(f"❌ Erro ao carregar PDF {arq}: {e}")
+
+    splitter = RecursiveCharacterTextSplitter(
+        chunk_size=1500,
+        chunk_overlap=200
+    )
+
+    docs_divididos = splitter.split_documents(documentos)
+
+    embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
+
+    vectordb = Chroma.from_documents(
+        docs_divididos,
+        embedding=embeddings,
+        persist_directory="db_rag"
+    )
+
+    print(f"📚 RAG carregado com {len(docs_divididos)} chunks de documentação.")
+    return vectordb
+
+def recuperar_contexto_rag(vectordb, pergunta):
+    if vectordb is None:
+        return ""   # ← antes retornava frase, agora retorna vazio
+
+    try:
+        resultados = vectordb.similarity_search(pergunta, k=5)
+        if not resultados:
+            return ""
+        return "\n\n".join([r.page_content for r in resultados])
+    except:
+        return ""
+
+def gerar_prompt(pergunta, historico, lista_dfs, contexto_documentacao=""):
     historico_texto = "\n".join(f"- {h}" for h in historico)
 
     colunas_texto = "\n".join(
@@ -6,14 +51,29 @@ def gerar_prompt(pergunta, historico, lista_dfs):
         for i, df in enumerate(lista_dfs)
     )
 
+    vectordb = carregar_documentacao_pdf("raybot/documentacao/*.pdf")
+
     return f"""
 Você é um analista de dados sênior especializado em análise tabular.
 Você tem acesso a {len(lista_dfs)} tabela(s) carregada(s) como DataFrames ('df1', 'df2', etc).
 
 ⏱️: REGRAS DE TEMPO
 - Você tem no máximo **40 segundos** para produzir a resposta.
+
 As respostas devem ser diretas e objetivas, ao mesmo tempo em que mantêm um tom claro, amigável e contextualizado, oferecendo ao usuário
 uma compreensão intuitiva do resultado sem revelar o passo a passo da análise, mostrar cálculos nem detalhar o método utilizado.
+
+====================================================
+📖 CONTEXTO DOCUMENTAL (RAG)
+A seguir está o conteúdo recuperado da documentação relevante à pergunta. 
+Você DEVE:
+- Ler e interpretar esse conteúdo ANTES de analisar os DataFrames.
+- Utilizar esse conteúdo sempre que a resposta depender de regras, definições, glossário, descrições de campos, processos ou qualquer instrução contida na documentação.
+- Se o RAG não for relevante para a pergunta, ignore-o silenciosamente.
+--- INÍCIO DO CONTEXTO ---
+{contexto_documentacao}
+--- FIM DO CONTEXTO ---
+====================================================
 
 ====================================================
 📌: HISTÓRICO DAS PERGUNTAS
