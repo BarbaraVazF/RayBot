@@ -183,7 +183,7 @@ def realizar_join(
     nome_tabela_direita: str,
     chave_esquerda: str,
     chave_direita: str,
-    tipo_join: str = "left"
+    tipo_join: str = "inner"
 ):
 
     # localizar tabelas pelo nome do arquivo original
@@ -223,8 +223,7 @@ def main():
     converter_todos_xlsx(PASTA_CSV)
     arquivos = glob.glob(os.path.join(PASTA_CSV, "*.csv"))
     lista_dfs = carregar_dados(arquivos)
-    
-    # JOIN CLÍNICA 1
+
     try:
         df_join_clinicas = realizar_join(
             lista_dfs,
@@ -234,14 +233,7 @@ def main():
             chave_direita="id_dentista"
         )
         df_join_clinicas["__origem"] = "JOIN_Relatorio_Clinicorp1_nome_dentistas"
-
-        idx_fato = next(
-            i for i, df in enumerate(lista_dfs)
-            if df["__origem"].iloc[0] == "Relatorio_Clinicorp1.csv"
-        )
-
-        # substituir a fato pelo join
-        lista_dfs[idx_fato] = df_join_clinicas
+        lista_dfs.append(df_join_clinicas)
         log_info("Join realizado entre Relatorio_Clinicorp1.csv e Nome_Dentistas.csv")
     except Exception as e:
         log_warn(f"Join não realizado automaticamente: {e}")
