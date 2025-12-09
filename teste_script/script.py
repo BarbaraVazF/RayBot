@@ -6,13 +6,37 @@ import os
 import glob
 import sys
 import traceback
-from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import Chroma
 from func_timeout import func_timeout, FunctionTimedOut
-from xlsx_csv import converter_todos_xlsx
-# Configuração de cores para logs
+
+def xlsx_to_csv(path_xlsx):
+    """
+    Converte um único XLSX em CSV no mesmo diretório e apaga o XLSX original.
+    """
+    path_csv = os.path.splitext(path_xlsx)[0] + ".csv"
+    try:
+        df = pd.read_excel(path_xlsx)
+        df.to_csv(path_csv, index=False, encoding="utf-8")
+        print(f"Convertido: {path_xlsx} → {path_csv}")
+        os.remove(path_xlsx)
+        print(f"Arquivo removido: {path_xlsx}")
+    except Exception as e:
+        print(f"Erro ao converter {path_xlsx}: {e}")
+def converter_todos_xlsx(diretorio="planilhas/"):
+    """
+    Converte todos os XLSX da pasta planilhas em CSV e remove os originais.
+    """
+    arquivos = glob.glob(os.path.join(diretorio, "*.xlsx"))
+    if not arquivos:
+        print("Nenhum XLSX de entrada encontrado.")
+        return
+    print(f"{len(arquivos)} XLSX encontrados para conversão (entrada).")
+    for arq in arquivos:
+        xlsx_to_csv(arq)
+
+
 try:
     from colorama import init as colorama_init, Fore, Style
     colorama_init(autoreset=True)
@@ -141,9 +165,9 @@ def carregar_dados(arquivos_csv):
     log_info(":lupa_direita: Tabelas carregadas individualmente.")
     return dfs_carregados
 # ====================================================
-# Função principal - analisar_dados_csv
+# Função principal - main
 # ====================================================
-def analisar_dados_csv():
+def main():
     # 1. CARREGAR DADOS
     converter_todos_xlsx(PASTA_CSV)
     arquivos = glob.glob(os.path.join(PASTA_CSV, "*.csv"))
@@ -188,10 +212,20 @@ def analisar_dados_csv():
         # ===============================
         # PROMPT
         # ===============================
+        COLUMN_MAP = {
+            "id do dentista": "id_dentista",
+            "id_dentista": "id do dentista",
+        }
+
+        colmap_text = "\n".join([f"'{k}' corresponde à coluna '{v}'" for k, v in COLUMN_MAP.items()])
+
         prompt = f"""
 Você é um analista de dados sênior especializado em análise tabular.
 Você tem acesso a {len(lista_dfs)} DataFrames carregados separadamente: df1, df2, etc.
 Esses DataFrames não são unidos automaticamente.
+:link: MAPA DE COLUNAS EQUIVALENTES (USAR OBRIGATORIAMENTE)
+As seguintes colunas representam a mesma coisa:
+{colmap_text}
 :livros: USO DO RAG (OBRIGATÓRIO E SIMPLIFICADO)
 O RAG contém descrições oficiais das tabelas e colunas.
 PROCESSO OBRIGATÓRIO DE INTERPRETAÇÃO:
@@ -247,4 +281,4 @@ Direta, objetiva, clara, amigável e sem explicar métodos nem cálculos
             log_error(f"Erro ao processar: {e}")
             print("-" * 60)
 if __name__ == "__main__":
-    analisar_dados_csv()
+    main()
