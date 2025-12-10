@@ -246,6 +246,50 @@ def main():
     except Exception as e:
         log_warn(f"Join não realizado automaticamente: {e}")
 
+    # JOIN CLÍNICA 2
+    try:
+        df_join_clinicas = realizar_join(
+            lista_dfs,
+            "Relatorio_Clinicorp2.csv",
+            "Nome_Dentistas.csv",
+            chave_esquerda="id do dentista",
+            chave_direita="id_dentista"
+        )
+        df_join_clinicas["__origem"] = "JOIN_Relatorio_Clinicorp2_nome_dentistas"
+
+        idx_fato = next(
+            i for i, df in enumerate(lista_dfs)
+            if df["__origem"].iloc[0] == "Relatorio_Clinicorp2.csv"
+        )
+
+        # substituir a fato pelo join
+        lista_dfs[idx_fato] = df_join_clinicas
+        log_info("Join realizado entre Relatorio_Clinicorp2.csv e Nome_Dentistas.csv")
+    except Exception as e:
+        log_warn(f"Join não realizado automaticamente: {e}")
+
+    # JOIN CLÍNICA 3
+    try:
+        df_join_clinicas = realizar_join(
+            lista_dfs,
+            "Relatorio_Clinicorp3.csv",
+            "Nome_Dentistas.csv",
+            chave_esquerda="id do dentista",
+            chave_direita="id_dentista"
+        )
+        df_join_clinicas["__origem"] = "JOIN_Relatorio_Clinicorp3_nome_dentistas"
+
+        idx_fato = next(
+            i for i, df in enumerate(lista_dfs)
+            if df["__origem"].iloc[0] == "Relatorio_Clinicorp3.csv"
+        )
+
+        # substituir a fato pelo join
+        lista_dfs[idx_fato] = df_join_clinicas
+        log_info("Join realizado entre Relatorio_Clinicorp3.csv e Nome_Dentistas.csv")
+    except Exception as e:
+        log_warn(f"Join não realizado automaticamente: {e}")    
+
     print("-" * 60)
     for i, df in enumerate(lista_dfs):
         log_info(f"📊 Tabela {i+1} ({df['__origem'].iloc[0]}): {len(df)} linhas | Colunas: {', '.join(df.columns)}")
