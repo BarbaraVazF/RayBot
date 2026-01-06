@@ -7,6 +7,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Acesso RayBot</title>
   <link rel="stylesheet" href="{% static 'home.css' %}">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  >
 </head>
 
 <body>
@@ -37,7 +41,15 @@
             class="input"
             required
           />
-          <button type="button" id="togglePassword" class="toggle-password" aria-label="Mostrar senha">👁️</button>
+
+          <button
+            type="button"
+            id="togglePassword"
+            class="toggle-password"
+            aria-label="Mostrar senha"
+          >
+            <i class="fa-solid fa-eye"></i>
+          </button>
         </div>
 
         <button type="submit" class="button">
@@ -55,12 +67,14 @@
     document.addEventListener("DOMContentLoaded", () => {
       const toggleBtn = document.getElementById("togglePassword");
       const passwordInput = document.getElementById("password");
-      let visible = false;
+      const icon = toggleBtn.querySelector("i");
 
       toggleBtn.addEventListener("click", () => {
-        visible = !visible;
-        passwordInput.type = visible ? "text" : "password";
-        toggleBtn.textContent = visible ? "👁️" : "👁️";
+        const isPassword = passwordInput.type === "password";
+
+        passwordInput.type = isPassword ? "text" : "password";
+        icon.classList.toggle("fa-eye");
+        icon.classList.toggle("fa-eye-slash");
       });
     });
   </script>
