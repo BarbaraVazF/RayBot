@@ -13,8 +13,7 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Flowable
 from datetime import datetime
 import urllib.parse
 from django.contrib.auth import update_session_auth_hash
-from utils.pandas_agent import carregar_multiplas_tabelas, criar_agente_multiplas_tabelas
-from utils.prompts import gerar_prompt
+from utils.leblon.service import LeblonService
 
 def home(request):
     if request.method == "POST":
@@ -61,34 +60,24 @@ def send_message(request, chat_id):
         chat = get_object_or_404(Chat, id=chat_id, user=request.user)
         data = json.loads(request.body)
         pergunta = data.get("content")
-        # Salvar pergunta do usuário
-        Message.objects.create(chat=chat, sender="user", content=pergunta)
-        # ==== Carregar dataframe e agente ====
-        tabelas = [
-            "meta_insights_geral",
-            "meta_insights_regiao",
-            "meta_insights_genero_idade",
-            "google_ads_geral",
-            "google_ads_regiao",
-            "google_ads_genero",
-        ]
 
-        lista_dfs = carregar_multiplas_tabelas(tabelas)
-        agente = criar_agente_multiplas_tabelas(lista_dfs)
-        # ==== Capturar histórico ====
-        historico = list(
-            chat.messages.filter(sender="user").values_list("content", flat=True)
-        )
-        # ==== Criar prompt ====
-        prompt = gerar_prompt(pergunta, historico, lista_dfs)
-        # ==== Rodar análise ====
+        Message.objects.create(chat=chat, sender="user", content=pergunta)
+
+        mensagens_anteriores = chat.messages.all().order_by('created_at') 
+        historico = []
+        for msg in mensagens_anteriores:
+            role = "Analista" if msg.sender == "bot" else "Usuário"
+            historico.append(f"{role}: {msg.content}")
+
+        service = LeblonService.get_instance()
+
         try:
-            resposta = agente.invoke({"input": prompt})
-            bot_texto = resposta.get("output", "Não consegui processar sua solicitação.")
+            bot_texto = service.responder(pergunta, historico)
         except Exception as e:
-            bot_texto = f"❌ Erro ao analisar os dados: {str(e)}"
-        # ==== Salvar resposta ====
+            bot_texto = f"❌ Erro interno ao processar: {str(e)}"
+
         Message.objects.create(chat=chat, sender="bot", content=bot_texto)
+
         return JsonResponse({"reply": bot_texto})
 
 @login_required
