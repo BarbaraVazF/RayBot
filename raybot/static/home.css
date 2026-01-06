@@ -64,6 +64,7 @@ body {
   position: relative;
   display: flex;
   align-items: center;
+  width: 100%;
 }
 
 .input {
@@ -83,16 +84,19 @@ body {
 .toggle-password {
   position: absolute;
   right: 12px;
-  background: transparent;
+  background: none;
   border: none;
   cursor: pointer;
   font-size: 18px;
-  color: #777;
+  color: #666;
   transition: color 0.2s;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.1rem;
 }
 
 .toggle-password:hover {
-  color: var(--color-primary);
+  color: #000;
 }
 
 .button {
