@@ -1,4 +1,4 @@
-IND003[DtOperacao],IND003[Empresa],IND003[Estabelecimento],IND003[KmRodado],IND003[Carro],IND003[LinhaCodigo],IND003[Nome],IND003[OIDBem],IND003[DtFabricacao],IND003[DESCRICAO.1],IND003[LinhaDescricao],IND003[CentroCusto],IND003[AnoFabricação],IND003[Meses Rodando],IND003[Nome Empresa2],IND003[Identificacao]
+IND003[DtOperacao],IND003[CodigoEmpresa],IND003[Estabelecimento],IND003[KmRodado],IND003[Carro],IND003[LinhaCodigo],IND003[Nome],IND003[OIDBem],IND003[DtFabricacao],IND003[DESCRICAO.1],IND003[LinhaDescricao],IND003[CentroCusto],IND003[AnoFabricação],IND003[Meses Rodando],IND003[Nome Empresa2],IND003[Ônibus]
 2023-01-06T00:00:00,2,2,352,31261,F13,Viação Nobel Ltda,A96D39767527,2014-10-20T00:00:00,CB Frota,ESTADOS,Comum,2014,133,Nobel,31261
 2023-01-09T00:00:00,2,2,351,31261,F13,Viação Nobel Ltda,A96D39767527,2014-10-20T00:00:00,CB Frota,ESTADOS,Comum,2014,133,Nobel,31261
 2023-01-12T00:00:00,2,2,353,31261,F13,Viação Nobel Ltda,A96D39767527,2014-10-20T00:00:00,CB Frota,ESTADOS,Comum,2014,133,Nobel,31261
