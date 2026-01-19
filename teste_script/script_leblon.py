@@ -1105,6 +1105,7 @@ USO DO RAG (OBRIGATÓRIO E SIMPLIFICADO)
 O RAG contém definições oficiais e estruturais, organizadas em três abas:
     - Aba 1 - Descrição das Planilhas: explica o propósito de cada tabela.
     - Aba 2 - Descrição das Colunas: detalha o significado e uso de cada coluna.
+<<<<<<< HEAD
 PROCESSO OBRIGATÓRIO DE INTERPRETAÇÃO:
 1. Mapear o segmento da pergunta (palavras-chave conceituais)
 2. Identificar se a pergunta envolve um indicador. Apenas se ela tiver o nome de um desses indicadores:
@@ -1128,6 +1129,17 @@ PROCESSO OBRIGATÓRIO DE INTERPRETAÇÃO:
     - Palavras-chave: "ICMQ", "IDF", "IMP", "OEMCP", "OEMPP", "Preventivas Liquidadas", "Preventivas Finalizadas"; "KMFalhas"; "QETG"; "QETT"; "CDTDM"; "CAIEFO"; "QVA"; "QVV"; "TIC"; "TO"; "TOPP".
 3. Caso não seja um indicador, a partir do segmento identificado, encontrar qual tabela mais tem similaridade com ele a partir da descrição e das suas colunas
 4. Selecionar a(s) tabela(s), identificar o filtro pedido na solicitação e encontrar quais colunas serão utilizadas - considerar tudo no cálculo e na resposta
+=======
+    - Aba 3 - Cálculo dos Indicadores: define indicadores oficiais, suas fórmulas e quais colunas/tabelas devem ser utilizadas no cálculo.
+PROCESSO OBRIGATÓRIO DE INTERPRETAÇÃO:
+1. Mapear o segmento da pergunta (palavras-chave conceituais)
+2. Identificar se a pergunta envolve um indicador
+    - Caso envolva, localizar o indicador na aba “Cálculo dos Indicadores”
+    - Identificar as tabelas e colunas envolvidas no cálculo conforme definido no RAG
+    - O cálculo deve respeitar exatamente a fórmula e a lógica descritas
+3. Caso não seja um indicador, a partir do segmento identificado, encontrar qual tabela mais tem similaridade com ele a partir da descrição e das suas colunas
+4. Selecionar a(s) tabela(s) e encontrar quais colunas serão utilizadas
+>>>>>>> 00444e68d35dd2cc998c7278ad7832b14a11e099
     - Quando envolver mais de uma tabela, garantir o relacionamento correto entre elas (ex.: identificadores comuns)
 ⚠️ Nunca use o RAG como fonte de dados numéricos.
 ⚠️ Nunca invente nomes de colunas. Use somente o que está explicitamente no RAG ou nos DataFrames.
