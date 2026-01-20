@@ -11,6 +11,7 @@ from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import Chroma
 from func_timeout import func_timeout, FunctionTimedOut
 from xlsx_csv import converter_todos_xlsx
+import datetime
 
 # Importa as ferramentas do outro arquivo
 import tools
@@ -304,10 +305,22 @@ def main():
 
         contexto_documentacao = recuperar_contexto_rag(vectordb, pergunta)
 
+        hoje = datetime.datetime.now()
+        data_atual_str = hoje.strftime("%d/%m/%Y")
+        dia_semana = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"][hoje.weekday()]
+
         # ===============================
         # PROMPT 
         # ===============================
         prompt = f"""
+
+**CONTEXTO TEMPORAL** 
+HOJE É: {data_atual_str} ({dia_semana}).
+Use esta data como referência absoluta para calcular termos relativos:
+- "Ano passado": Calcule o ano de {data_atual_str} menos 1.
+- "Mês passado": Calcule o mês anterior à data de {data_atual_str}.
+- "Este ano" ou "Atualmente": Refere-se ao ano de {data_atual_str}.
+- "Últimos 12 meses": De {data_atual_str} voltando 1 ano.
 
 Você é um analista de dados sênior especializado em análise tabular.
 Você tem acesso a {len(lista_dfs)} DataFrames carregados separadamente: df1, df2, etc.
@@ -339,6 +352,14 @@ PROCESSO OBRIGATÓRIO DE INTERPRETAÇÃO:
     - Se a pergunta for sobre **TOPP** (Índice de Valor por TOPP) -> `calcular_topp`
     Observação: Você só tem permissão para usar as tools se o usuário mencionar **EXPLICITAMENTE**:
     - Palavras-chave: "ICMQ", "IDF", "IMP", "OEMCP", "OEMPP", "Preventivas Liquidadas", "Preventivas Finalizadas"; "KMFalhas"; "QETG"; "QETT"; "CDTDM"; "CAIEFO"; "QVA"; "QVV"; "TIC"; "TO"; "TOPP".
+2.1. **DETECÇÃO DE DATAS E PERÍODOS**:
+   - Se o usuário especificar um período temporal (ex: "mês passado", "em 2024", "janeiro de 2025", "de 01/01 a 15/01"), você DEVE converter isso para datas no formato ISO **AAAA-MM-DD**.
+   - `data_inicial`: Data de início do período.
+   - `data_final`: Data de fim do período.
+   - Exemplo: "Custo em Setembro de 2024" -> data_inicial="2024-09-01", data_final="2024-09-30".
+   - Exemplo: "Até hoje" -> data_final="DATA_ATUAL".
+   - Exemplo: "Em 2023" -> data_inicial="2023-01-01", data_final="2023-12-31".
+   - Se não houver data especificada, não preencha esses campos nas tools.
 3. Caso não seja um indicador, a partir do segmento identificado, encontrar qual tabela mais tem similaridade com ele a partir da descrição e das suas colunas
 4. Selecionar a(s) tabela(s), identificar o filtro pedido na solicitação e encontrar quais colunas serão utilizadas - considerar tudo no cálculo e na resposta
     - Quando envolver mais de uma tabela, garantir o relacionamento correto entre elas (ex.: identificadores comuns)
