@@ -209,9 +209,7 @@ class InputCalculoKPI(BaseModel):
 @tool(args_schema=InputCalculoKPI)
 def calcular_icmq(filtro_coluna: Optional[str] = None, filtro_valor: Optional[str] = None, data_inicial: Optional[str] = None, data_final: Optional[str] = None) -> str:
     """Calcula o ICMQ (Custo / Km).
-    USE APENAS SE A PERGUNTA MENCIONAR EXPLICITAMENTE 'ICMQ' OU 'ÍNDICE DE CUSTO'.
-    ⚠️ PROIBIDO USAR para perguntas gerais como "Qual o custo total?", "Qual ônibus gastou mais?" ou "Quanto foi rodado?".
-    Para essas perguntas gerais, use Pandas diretamente."""
+    USE APENAS SE A PERGUNTA MENCIONAR EXPLICITAMENTE 'ICMQ'."""
     
     # Log atualizado para mostrar as datas
     print(f"\n{Fore.CYAN}🛠️ TOOL ICMQ CHAMADA:{Style.RESET_ALL} Coluna='{filtro_coluna}', Valor='{filtro_valor}', Data='{data_inicial} a {data_final}'")
@@ -287,9 +285,7 @@ def calcular_icmq(filtro_coluna: Optional[str] = None, filtro_valor: Optional[st
 @tool(args_schema=InputCalculoKPI)
 def calcular_idf(filtro_coluna: Optional[str] = None, filtro_valor: Optional[str] = None, data_inicial: Optional[str] = None, data_final: Optional[str] = None) -> str:
     """Calcula o IDF (Índice de Falhas).
-    USE APENAS SE A PERGUNTA MENCIONAR EXPLICITAMENTE 'IDF', 'ÍNDICE DE FALHAS' OU 'DESEMPENHO DA FROTA'.
-    ⚠️ PROIBIDO USAR para perguntas como "Quais ônibus tiveram mais saídas?", "Quantas trocas ocorreram?" ou rankings.
-    Para contagens e rankings, use Pandas diretamente."""
+    USE APENAS SE A PERGUNTA MENCIONAR EXPLICITAMENTE 'IDF'."""
     
     print(f"\n{Fore.CYAN}🛠️ TOOL IDF CHAMADA:{Style.RESET_ALL} Coluna='{filtro_coluna}', Valor='{filtro_valor}', Data='{data_inicial} a {data_final}'")
     
@@ -365,7 +361,7 @@ def calcular_idf(filtro_coluna: Optional[str] = None, filtro_valor: Optional[str
 def calcular_imp(filtro_coluna: Optional[str] = None, filtro_valor: Optional[str] = None, data_inicial: Optional[str] = None, data_final: Optional[str] = None) -> str:
     """Calcula o IMP (Índice de Manutenção Preventiva).
     Fórmula: Preventivas / (Corretivas + Preventivas).
-    USE APENAS SE A PERGUNTA MENCIONAR EXPLICITAMENTE 'IMP', 'PREVENTIVA' ou 'INDICE DE MANUTENÇÃO'.
+    USE APENAS SE A PERGUNTA MENCIONAR EXPLICITAMENTE 'IMP'.
     """
     print(f"\n{Fore.CYAN}🛠️ TOOL IMP CHAMADA:{Style.RESET_ALL} Coluna='{filtro_coluna}', Valor='{filtro_valor}', Data='{data_inicial} a {data_final}'")
     
@@ -440,8 +436,8 @@ def calcular_imp(filtro_coluna: Optional[str] = None, filtro_valor: Optional[str
 
 @tool(args_schema=InputCalculoKPI)
 def calcular_oemcp(filtro_coluna: Optional[str] = None, filtro_valor: Optional[str] = None, data_inicial: Optional[str] = None, data_final: Optional[str] = None) -> str:
-    """Calcula o OEMCP (Ordens Corretivas Pendentes).
-    Contagem de OIDDocumento únicos.
+    """Calcula o OEMCP (Ordens Corretivas Pendentes). Contagem de OIDDocumento únicos.
+    USE APENAS SE A PERGUNTA MENCIONAR EXPLICITAMENTE 'OEMCP'.
     """
     print(f"\n{Fore.CYAN}🛠️ TOOL OEMCP (CORRIGIDA - UNIQUE ID) CHAMADA:{Style.RESET_ALL} Coluna='{filtro_coluna}', Valor='{filtro_valor}', Data='{data_inicial} a {data_final}'")
 
@@ -516,8 +512,8 @@ def calcular_oemcp(filtro_coluna: Optional[str] = None, filtro_valor: Optional[s
 
 @tool(args_schema=InputCalculoKPI)
 def calcular_oempp(filtro_coluna: Optional[str] = None, filtro_valor: Optional[str] = None, data_inicial: Optional[str] = None, data_final: Optional[str] = None) -> str:
-    """Calcula o OEMPP (Preventivas/Inspeções Pendentes).
-    Contagem de OIDDocumento únicos.
+    """Calcula o OEMPP (Preventivas/Inspeções Pendentes). Contagem de OIDDocumento únicos.
+    USE APENAS SE A PERGUNTA MENCIONAR EXPLICITAMENTE 'OEMPP'.
     """
     print(f"\n{Fore.CYAN}🛠️ TOOL OEMPP (CORRIGIDA - UNIQUE ID) CHAMADA:{Style.RESET_ALL} Coluna='{filtro_coluna}', Valor='{filtro_valor}', Data='{data_inicial} a {data_final}'")
 
@@ -588,8 +584,9 @@ def calcular_oempp(filtro_coluna: Optional[str] = None, filtro_valor: Optional[s
 
 @tool(args_schema=InputCalculoKPI)
 def calcular_preventivas_liquidadas(filtro_coluna: Optional[str] = None, filtro_valor: Optional[str] = None, data_inicial: Optional[str] = None, data_final: Optional[str] = None) -> str:
-    """Calcula total de Preventivas e Inspeções com status LIQUIDADO.
-    Contagem de OIDDocumento únicos.
+    """Calcula total de Preventivas e Inspeções com status LIQUIDADO. Contagem de OIDDocumento únicos.
+    USE APENAS SE A PERGUNTA MENCIONAR EXPLICITAMENTE 'Preventivas Liquidadas'.
+    NÃO É RELACIONADA A DINHEIRO, NÃO USE R$
     """
     print(f"\n{Fore.CYAN}🛠️ TOOL PREVENTIVAS LIQUIDADAS CHAMADA:{Style.RESET_ALL} Coluna='{filtro_coluna}', Valor='{filtro_valor}', Data='{data_inicial} a {data_final}'")
 
@@ -603,34 +600,31 @@ def calcular_preventivas_liquidadas(filtro_coluna: Optional[str] = None, filtro_
         # =================================================================
         # 1. FILTRO DE DATA
         # =================================================================
-        # Filtra MANT002 (Usa DtManutencao)
         df_filt, msg_data = aplicar_filtro_periodo(df_filt, "MANT002", data_inicial, data_final)
         msg_filtro += msg_data
 
         if df_filt.empty:
-            return f"Preventivas Liquidadas: 0 (Sem dados no período). {msg_filtro}"
+            return f"Quantidade de Preventivas Liquidadas: 0 (Sem dados no período). {msg_filtro}"
 
         # =================================================================
-        # 2. FILTRO CATEGÓRICO (Empresa, Ônibus, etc)
+        # 2. FILTRO CATEGÓRICO
         # =================================================================
         if filtro_coluna and filtro_valor:
             res_filt, col_usada = aplicar_filtro_inteligente(df_filt, filtro_coluna, filtro_valor)
             if res_filt is not None: 
                 df_filt = res_filt
             
-            # Se o filtro categórico zerou tudo
             if df_filt.empty:
-                 return f"Preventivas Liquidadas: 0 (Filtro '{filtro_coluna}={filtro_valor}' zerou os dados). {msg_filtro}"
+                 return f"Quantidade de Preventivas Liquidadas: 0 (Filtro '{filtro_coluna}={filtro_valor}' zerou os dados). {msg_filtro}"
             
             msg_filtro += f" (Filtro Coluna: {col_usada or 'N/A'})"
 
         # =================================================================
-        # 3. CÁLCULO (Lógica Original Mantida)
+        # 3. CÁLCULO
         # =================================================================
         col_tipo = next((c for c in df_filt.columns if "tipomanutencao" in normalizar_texto(c)), None)
         col_id = next((c for c in df_filt.columns if "oiddocumento" in normalizar_texto(c)), None)
         
-        # Busca coluna de Situação
         col_situacao = next((c for c in df_filt.columns if "situacaodocumento" in normalizar_texto(c)), None)
         if not col_situacao: col_situacao = next((c for c in df_filt.columns if "status" in normalizar_texto(c)), None)
         if not col_situacao: 
@@ -653,8 +647,10 @@ def calcular_preventivas_liquidadas(filtro_coluna: Optional[str] = None, filtro_
         # CONTAGEM ÚNICA DE DOCUMENTOS
         qtd_docs = df_final[col_id].nunique()
 
-        if qtd_docs == 0: return f"Preventivas Liquidadas: 0. {msg_filtro}"
-        return f"Total de Preventivas Liquidadas: {qtd_docs}. {msg_filtro}"
+        if qtd_docs == 0: return f"Quantidade de Preventivas Liquidadas: 0. {msg_filtro}"
+        
+        # AQUI ESTÁ A CORREÇÃO PRINCIPAL: "Quantidade ... ordens"
+        return f"Quantidade de Preventivas Liquidadas: {qtd_docs} ordens. {msg_filtro}"
 
     except Exception as e:
         traceback.print_exc()
@@ -662,9 +658,9 @@ def calcular_preventivas_liquidadas(filtro_coluna: Optional[str] = None, filtro_
 
 @tool(args_schema=InputCalculoKPI)
 def calcular_km_falhas(filtro_coluna: Optional[str] = None, filtro_valor: Optional[str] = None, data_inicial: Optional[str] = None, data_final: Optional[str] = None) -> str:
-    """Calcula o KmFalhas (Km Rodado / Quantidade de Quebras).
+    """Calcula o KmFalhas (Km Rodado / Quantidade de Quebras). 
     Fórmula: Soma(IND003[KmRodado]) / Contagem(MANT001 onde Tipo contem 'quebra').
-    USE APENAS SE A PERGUNTA MENCIONAR 'KMFALHAS', 'KM POR QUEBRA' OU 'MKBF'.
+    USE APENAS SE A PERGUNTA MENCIONAR 'KMFALHAS'.
     """
     print(f"\n{Fore.CYAN}🛠️ TOOL KM_FALHAS CHAMADA:{Style.RESET_ALL} Coluna='{filtro_coluna}', Valor='{filtro_valor}', Data='{data_inicial} a {data_final}'")
     
@@ -747,9 +743,9 @@ def calcular_km_falhas(filtro_coluna: Optional[str] = None, filtro_valor: Option
 
 @tool(args_schema=InputCalculoKPI)
 def calcular_qetg(filtro_coluna: Optional[str] = None, filtro_valor: Optional[str] = None, data_inicial: Optional[str] = None, data_final: Optional[str] = None) -> str:
-    """Calcula o QETG (Km Rodado / Trocas na Garagem).
+    """Calcula o QETG (Km Rodado / Trocas na Garagem). 
     Fórmula: Soma(IND003[KmRodado]) / Contagem Distinta(MANT001[OIDDocumento] onde Tipo contém 'Garagem').
-    USE APENAS SE A PERGUNTA MENCIONAR 'QETG' ou 'TROCAS NA GARAGEM'.
+    USE APENAS SE A PERGUNTA MENCIONAR 'QETG'.
     """
     print(f"\n{Fore.CYAN}🛠️ TOOL QETG CHAMADA:{Style.RESET_ALL} Coluna='{filtro_coluna}', Valor='{filtro_valor}', Data='{data_inicial} a {data_final}'")
     
@@ -838,9 +834,9 @@ def calcular_qetg(filtro_coluna: Optional[str] = None, filtro_valor: Optional[st
 
 @tool(args_schema=InputCalculoKPI)
 def calcular_qett(filtro_coluna: Optional[str] = None, filtro_valor: Optional[str] = None, data_inicial: Optional[str] = None, data_final: Optional[str] = None) -> str:
-    """Calcula o QETT (Km Rodado / Trocas no Terminal).
+    """Calcula o QETT (Km Rodado / Trocas no Terminal). 
     Fórmula: Soma(IND003[KmRodado]) / Contagem Distinta(MANT001[OIDDocumento] onde Tipo contém 'Terminal').
-    USE APENAS SE A PERGUNTA MENCIONAR 'QETT' ou 'TROCAS NO TERMINAL'.
+    USE APENAS SE A PERGUNTA MENCIONAR 'QETT'.
     """
     print(f"\n{Fore.CYAN}🛠️ TOOL QETT CHAMADA:{Style.RESET_ALL} Coluna='{filtro_coluna}', Valor='{filtro_valor}', Data='{data_inicial} a {data_final}'")
     
@@ -929,10 +925,9 @@ def calcular_qett(filtro_coluna: Optional[str] = None, filtro_valor: Optional[st
 
 @tool(args_schema=InputCalculoKPI)
 def calcular_cdtdm(filtro_coluna: Optional[str] = None, filtro_valor: Optional[str] = None, data_inicial: Optional[str] = None, data_final: Optional[str] = None) -> str:
-    """Calcula o indicador CDTDM.
-    Lógica: Soma da coluna 'Valor' da tabela INDMANTMANUAL 
-    onde a coluna 'Simbolo' é igual a 'CDTDML'.
-    """
+    """Calcula o indicador CDTDM. 
+    Lógica: Soma da coluna 'Valor' da tabela INDMANTMANUAL .
+    USE APENAS SE A PERGUNTA MENCIONAR 'CDTDM'."""
     print(f"\n{Fore.CYAN}🛠️ TOOL CDTDM CHAMADA:{Style.RESET_ALL} Coluna='{filtro_coluna}', Valor='{filtro_valor}', Data='{data_inicial} a {data_final}'")
 
     try:
@@ -948,15 +943,14 @@ def calcular_cdtdm(filtro_coluna: Optional[str] = None, filtro_valor: Optional[s
         # =================================================================
         # 1. FILTRO DE DATA
         # =================================================================
-        # Filtra INDMANTMANUAL (Usa DtMovimento conforme MAPA_DATAS)
         df_filt, msg_data = aplicar_filtro_periodo(df_filt, "INDMANTMANUAL", data_inicial, data_final)
         msg_filtro += msg_data
 
         if df_filt.empty:
-            return f"CDTDM: Sem dados no período solicitado. {msg_filtro}"
+            return f"CDTDM: 0.00 (Sem dados no período). {msg_filtro}"
 
         # =================================================================
-        # 2. FILTRO CATEGÓRICO (Empresa/Filial/etc)
+        # 2. FILTRO CATEGÓRICO
         # =================================================================
         if filtro_coluna and filtro_valor:
             res_filt, col_usada = aplicar_filtro_inteligente(df_filt, filtro_coluna, filtro_valor)
@@ -965,40 +959,39 @@ def calcular_cdtdm(filtro_coluna: Optional[str] = None, filtro_valor: Optional[s
                 msg_filtro += f" (Filtro Coluna: {col_usada or 'N/A'})"
             
             if df_filt.empty:
-                return f"CDTDM: R$ 0,00 (Filtro '{filtro_coluna}={filtro_valor}' zerou os dados). {msg_filtro}"
+                return f"CDTDM: 0.00 (Filtro zerou os dados). {msg_filtro}"
 
         # =================================================================
         # 3. CÁLCULO
         # =================================================================
-        # Identificar Colunas (Valor e Simbolo)
         col_valor = next((c for c in df_filt.columns if "valor" in normalizar_texto(c)), None)
         col_simbolo = next((c for c in df_filt.columns if "simbolo" in normalizar_texto(c)), None)
 
-        if not col_valor: return "Erro: Coluna 'Valor' não encontrada na INDMANTMANUAL."
-        if not col_simbolo: return "Erro: Coluna 'Simbolo' não encontrada na INDMANTMANUAL."
+        if not col_valor or not col_simbolo: return "Erro: Colunas não encontradas."
 
-        # Aplicar a Lógica do Indicador (Simbolo == CDTDML)
         series_simbolo = df_filt[col_simbolo].astype(str).str.strip().str.upper()
-        
         mask_cdtdm = series_simbolo == "CDTDML"
-        
         df_final = df_filt[mask_cdtdm]
         
-        # Somar Valor
         total_valor = pd.to_numeric(df_final[col_valor], errors='coerce').fillna(0).sum()
         qtd_registros = len(df_final)
 
-        print(f"   -> Total CDTDM: R$ {total_valor:,.2f} | Registros: {qtd_registros}")
+        print(f"   -> Total CDTDM: {total_valor:,.2f} | Registros: {qtd_registros}")
 
         if qtd_registros == 0:
-            return f"CDTDM: R$ 0,00 (Nenhum registro com Simbolo 'CDTDML' encontrado). {msg_filtro}"
+            return f"CDTDM: 0.00 (Nenhum registro encontrado). {msg_filtro}"
 
-        return f"O valor do indicador CDTDM é R$ {total_valor:,.2f} ({qtd_registros} registros encontrados). {msg_filtro}"
+        # MUDANÇA DRÁSTICA AQUI:
+        # Usamos a palavra "PONTUAÇÃO" e instruímos explicitamente a não usar moeda.
+        return f"A Pontuação Total do CDTDM é {total_valor:,.2f} pontos. (NOTA PARA O AGENTE: Este valor é um índice, NÃO adicione R$ ou formatação monetária). {msg_filtro}"
 
     except Exception as e:
         traceback.print_exc()
         return f"Erro processando CDTDM: {str(e)}"
 
+# ==============================================================================
+# FUNÇÃO AUXILIAR (Lógica Unificada de Prefixo com DATA)
+# ==============================================================================
 # ==============================================================================
 # FUNÇÃO AUXILIAR (Lógica Unificada de Prefixo com DATA)
 # ==============================================================================
@@ -1019,57 +1012,43 @@ def _calcular_indicador_prefixo(nome_indicador: str, string_busca: str, qtd_letr
         df_filt = df_manual.copy()
         msg_filtro = ""
 
-        # =================================================================
         # 1. FILTRO DE DATA
-        # =================================================================
-        # Filtra INDMANTMANUAL (Usa DtMovimento conforme MAPA_DATAS)
         df_filt, msg_data = aplicar_filtro_periodo(df_filt, "INDMANTMANUAL", data_inicial, data_final)
         msg_filtro += msg_data
 
         if df_filt.empty:
-            return f"{nome_indicador}: Sem dados no período solicitado. {msg_filtro}"
+            return f"{nome_indicador}: 0.00 (Sem dados no período). {msg_filtro}"
 
-        # =================================================================
-        # 2. FILTRO CATEGÓRICO (Empresa, Filial, etc)
-        # =================================================================
+        # 2. FILTRO CATEGÓRICO
         if filtro_coluna and filtro_valor:
             res_filt, col_usada = aplicar_filtro_inteligente(df_filt, filtro_coluna, filtro_valor)
             if res_filt is not None: 
                 df_filt = res_filt
                 msg_filtro += f" (Filtro Coluna: {col_usada or 'N/A'})"
             
-            # Se o filtro zerou os dados
             if df_filt.empty:
-                return f"{nome_indicador}: R$ 0,00 (Filtro '{filtro_coluna}={filtro_valor}' zerou os dados). {msg_filtro}"
+                return f"{nome_indicador}: 0.00 (Filtro zerou os dados). {msg_filtro}"
 
-        # =================================================================
         # 3. CÁLCULO
-        # =================================================================
-        # Identificação das Colunas (Valor e Descricao)
         col_valor = next((c for c in df_filt.columns if "valor" in normalizar_texto(c)), None)
         col_desc = next((c for c in df_filt.columns if "descricao" in normalizar_texto(c)), None)
 
-        if not col_valor: return "Erro: Coluna 'Valor' não encontrada na INDMANTMANUAL."
-        if not col_desc: return "Erro: Coluna 'Descricao' não encontrada na INDMANTMANUAL."
+        if not col_valor or not col_desc: return "Erro: Colunas Valor/Descricao não encontradas."
 
-        # Lógica de Prefixo (Starts With)
         series_desc = df_filt[col_desc].astype(str).str.strip().str.upper()
-        
-        # Verifica se os primeiros N caracteres correspondem à string de busca
         mask_prefixo = series_desc.str.slice(0, qtd_letras) == string_busca.upper()
-        
         df_final = df_filt[mask_prefixo]
         
-        # Soma e Contagem
         total_valor = pd.to_numeric(df_final[col_valor], errors='coerce').fillna(0).sum()
         qtd_registros = len(df_final)
 
-        print(f"   -> Total {nome_indicador}: R$ {total_valor:,.2f} | Registros: {qtd_registros}")
+        print(f"   -> Total {nome_indicador}: {total_valor:,.2f} | Registros: {qtd_registros}")
 
         if qtd_registros == 0:
-            return f"{nome_indicador}: R$ 0,00 (Nenhum registro iniciando com '{string_busca}' encontrado). {msg_filtro}"
+            return f"{nome_indicador}: 0.00 (Nenhum registro encontrado). {msg_filtro}"
 
-        return f"O valor do indicador {nome_indicador} é R$ {total_valor:,.2f} ({qtd_registros} registros encontrados). {msg_filtro}"
+        # RETORNO FORÇADO: Substitui "O valor é..." por "Índice acumulado..."
+        return f"Índice acumulado {nome_indicador}: {total_valor:,.2f} (unidades/pontos). {msg_filtro}"
 
     except Exception as e:
         traceback.print_exc()
@@ -1081,42 +1060,42 @@ def _calcular_indicador_prefixo(nome_indicador: str, string_busca: str, qtd_letr
 
 @tool(args_schema=InputCalculoKPI)
 def calcular_caiefo(filtro_coluna: Optional[str] = None, filtro_valor: Optional[str] = None, data_inicial: Optional[str] = None, data_final: Optional[str] = None) -> str:
-    """Calcula o indicador CAIEFO.
+    """Calcula o indicador CAIEFO. 
     Lógica: Soma INDMANTMANUAL[Valor] onde as 6 primeiras letras de Descricao são 'CAIEFO'.
-    """
+    USE APENAS SE A PERGUNTA MENCIONAR 'CAIEFO'."""
     return _calcular_indicador_prefixo("CAIEFO", "CAIEFO", 6, filtro_coluna, filtro_valor, data_inicial, data_final)
 
 @tool(args_schema=InputCalculoKPI)
 def calcular_qva(filtro_coluna: Optional[str] = None, filtro_valor: Optional[str] = None, data_inicial: Optional[str] = None, data_final: Optional[str] = None) -> str:
-    """Calcula o indicador QVA.
+    """Calcula o indicador QVA. 
     Lógica: Soma INDMANTMANUAL[Valor] onde as 3 primeiras letras de Descricao são 'QVA'.
-    """
+    USE APENAS SE A PERGUNTA MENCIONAR 'QVA'."""
     return _calcular_indicador_prefixo("QVA", "QVA", 3, filtro_coluna, filtro_valor, data_inicial, data_final)
 
 @tool(args_schema=InputCalculoKPI)
 def calcular_qvv(filtro_coluna: Optional[str] = None, filtro_valor: Optional[str] = None, data_inicial: Optional[str] = None, data_final: Optional[str] = None) -> str:
-    """Calcula o indicador QVV.
+    """Calcula o indicador QVV. 
     Lógica: Soma INDMANTMANUAL[Valor] onde as 3 primeiras letras de Descricao são 'QVV'.
-    """
+    USE APENAS SE A PERGUNTA MENCIONAR 'QVV'."""
     return _calcular_indicador_prefixo("QVV", "QVV", 3, filtro_coluna, filtro_valor, data_inicial, data_final)
 
 @tool(args_schema=InputCalculoKPI)
 def calcular_tic(filtro_coluna: Optional[str] = None, filtro_valor: Optional[str] = None, data_inicial: Optional[str] = None, data_final: Optional[str] = None) -> str:
-    """Calcula o indicador TIC.
+    """Calcula o indicador TIC. 
     Lógica: Soma INDMANTMANUAL[Valor] onde as 3 primeiras letras de Descricao são 'TIC'.
-    """
+    USE APENAS SE A PERGUNTA MENCIONAR 'TIC'."""
     return _calcular_indicador_prefixo("TIC", "TIC", 3, filtro_coluna, filtro_valor, data_inicial, data_final)
 
 @tool(args_schema=InputCalculoKPI)
 def calcular_to(filtro_coluna: Optional[str] = None, filtro_valor: Optional[str] = None, data_inicial: Optional[str] = None, data_final: Optional[str] = None) -> str:
-    """Calcula o indicador TO.
+    """Calcula o indicador TO. 
     Lógica: Soma INDMANTMANUAL[Valor] onde as 2 primeiras letras de Descricao são 'TO'.
-    """
+    USE APENAS SE A PERGUNTA MENCIONAR 'TO'."""
     return _calcular_indicador_prefixo("TO", "TO", 2, filtro_coluna, filtro_valor, data_inicial, data_final)
 
 @tool(args_schema=InputCalculoKPI)
 def calcular_topp(filtro_coluna: Optional[str] = None, filtro_valor: Optional[str] = None, data_inicial: Optional[str] = None, data_final: Optional[str] = None) -> str:
-    """Calcula o indicador TOPP.
+    """Calcula o indicador TOPP. 
     Lógica: Soma INDMANTMANUAL[Valor] onde as 4 primeiras letras de Descricao são 'TOPP'.
-    """
+    USE APENAS SE A PERGUNTA MENCIONAR 'TOPP'."""
     return _calcular_indicador_prefixo("TOPP", "TOPP", 4, filtro_coluna, filtro_valor, data_inicial, data_final)
