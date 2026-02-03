@@ -230,7 +230,8 @@ INSTRUÇÃO MESTRA:
    - Utilize Python/Pandas diretamente nos DataFrames.
    - Analise os nomes das tabelas abaixo para entender onde estão os dados e o contexto RAG {contexto_rag} com a descrição de todas as colunas.
     - CTM = Dados financeiro de custo/gasto com manutenções e peças trocadas.
-    - MANT001 = Detalhes sobre a abertura de chamado e sobre o serviço realizado na manutenção (se foi por quebra, se foi na garagem, no terminal...).
+    - MANT001 = Detalhes sobre a abertura de chamado e sobre o serviço realizado na manutenção.
+        - REGRA DE FILTRO (Coluna DetalhesServiço): Locais e Motivos estão misturados nesta coluna. NÃO busque colunas separadas. Para perguntas envolvendo Quebra/Falha, Garagem, Terminal ou Trajeto, use OBRIGATORIAMENTE df['DetalhesServiço'].str.contains('termo', case=False) mapeando a palavra-chave correspondente (ex: buscar "quebra" para falhas ou "garagem" para local).
     - MANT002 = Detalhes técnicos do trabalho realizado, como tipo (corretiva, preventiva e inspeção), categoria, classe, turno e tempo de duração (minutos) e colaborador responsável pela manutenção.
     - MANT004 = Saída dos ônibus, sua data, turno.
     - IND003 = KM rodado, linha associada ao ônibus, centro de custo associado ao ônibus e à linha, ano de fabricação e tempo de vida.
