@@ -1,11 +1,11 @@
+import datetime
 import pandas as pd
 from langchain.tools import tool
 from typing import Optional
 import unicodedata
 from pydantic import BaseModel, Field
 import traceback
-import os
-import re # Adicionado para extração de números
+import re 
 
 # Configuração de cores para logs
 try:
