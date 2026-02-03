@@ -12,9 +12,7 @@ from langchain_community.vectorstores import Chroma
 from func_timeout import func_timeout, FunctionTimedOut
 from xlsx_csv import converter_todos_xlsx
 import datetime
-
-# --- IMPORTAÇÃO DAS TOOLS ---
-import tools 
+import tools
 
 # Configuração de cores para logs
 try:
@@ -165,12 +163,12 @@ def main():
         tools.calcular_oemcp, tools.calcular_oempp, tools.calcular_preventivas_liquidadas, 
         tools.calcular_km_falhas, tools.calcular_qetg, tools.calcular_qett, 
         tools.calcular_cdtdm, tools.calcular_caiefo, tools.calcular_qva, 
-        tools.calcular_qvv, tools.calcular_tic, tools.calcular_to, tools.calcular_topp
+        tools.calcular_qvv, tools.calcular_tic, tools.calcular_to, tools.calcular_topp,
+        tools.calcular_tia, tools.calcular_iavlit, tools.calcular_pcv, tools.calcular_ioalo, tools.calcular_indoa,
+        tools.consultar_meta_indicador, tools.analisar_evolucao_kpi
     ]
 
     # 5. AGENTE UNIFICADO (A Chave do Sucesso do TESTE.PY)
-    # O create_pandas_dataframe_agent é inteligente. Se você passar extra_tools, 
-    # ele decide sozinho se usa Pandas ou se chama a Tool.
     agente = create_pandas_dataframe_agent(
         llm,
         lista_dfs,
@@ -179,7 +177,7 @@ def main():
         max_iterations=50,
         extra_tools=lista_tools_kpi, # Tools injetadas aqui
         agent_type="openai-tools",
-        agent_executor_kwargs={"handle_parsing_errors": True, "timeout": 60}
+        agent_executor_kwargs={"handle_parsing_errors": True, "timeout": 80}
     )
 
     # 6. LOOP DE INTERAÇÃO
@@ -218,19 +216,25 @@ DATA DE HOJE: {hoje}
 
 INSTRUÇÃO MESTRA:
 1. Se a pergunta for sobre um INDICADOR ESPECÍFICO listado abaixo, USE A TOOL correspondente.
-   Siglas: ICMQ, IDF, IMP, OEMCP, OEMPP, KmFalhas, QETG, QETT, CDTDM, CAIEFO, QVA, QVV, TIC, TO, TOPP, Preventivas Liquidadas.
+   Siglas: ICMQ, IDF, IMP, OEMCP, OEMPP, KmFalhas, QETG, QETT, CDTDM, CAIEFO, QVA, QVV, TIC, TO, TIA, PCV, IOALO, IAVLIT, TOPP, Preventivas Liquidadas.
+   ATENÇÃO: ENTRA NESSE CASO SE A PERGUNTA TIVER A SIGLA EXATA DE UM DESSES INDICADORES
    - Não tente calcular esses KPIs via pandas manualmente. Use a tool.
    - Se houver datas na pergunta (ex: "janeiro 2024"), converta para formato 'YYYY-MM-DD' e passe para a tool.
+   - PASSO CRÍTICO: Se a pergunta for sobre COMPARAÇÃO, EVOLUÇÃO, MELHORIA ou PIORA entre dois períodos (ex: "O ICMQ melhorou em relação ao mês passado?"):
+    - USE A TOOL 'analisar_evolucao_kpi' e defina as datas dos dois períodos (Atual vs Anterior).
+    - Quanto MAIOR, MELHOR: IDF, IMP, KmFalhas, QETG, QETT, Preventivas Liquidadas, IAVLIT, PCV, IOALO.
+    - Quanto MENOR, MELHOR: ICMQ (Custo), CDTDM (Pontos), OEMCP (Pendências), OEMPP (Pendências), TO, TOPP, CAIEFO, QVA, QVV, TIC, TIA.
+   - Sempre que o usuário perguntar sobre "meta", "objetivo" ou "desempenho vs esperado", consulte o DataFrame correspondente às metas (METAS_INDICADORES).
 
 2. Para TODAS AS OUTRAS PERGUNTAS (Análise geral, contagens, somas, listagens, rankings):
    - Utilize Python/Pandas diretamente nos DataFrames.
-   - Analise os nomes das colunas abaixo para entender onde estão os dados.
-   - CTM = Custos/Peças
-   - MANT001 = Ocorrências/Trocas/Quebras
-   - MANT002 = Ordem de Serviço/Manutenção/Preventiva/Corretiva
-   - MANT004 = Saídas
-   - IND003 = Quilometragem (KmRodado)
-
+   - Analise os nomes das tabelas abaixo para entender onde estão os dados e o contexto RAG {contexto_rag} com a descrição de todas as colunas.
+    - CTM = Dados financeiro de custo/gasto com manutenções e peças trocadas.
+    - MANT001 = Detalhes sobre a abertura de chamado e sobre o serviço realizado na manutenção (se foi por quebra, se foi na garagem, no terminal...).
+    - MANT002 = Detalhes técnicos do trabalho realizado, como tipo (corretiva, preventiva e inspeção), categoria, classe, turno e tempo de duração (minutos) e colaborador responsável pela manutenção.
+    - MANT004 = Saída dos ônibus, sua data, turno.
+    - IND003 = KM rodado, linha associada ao ônibus, centro de custo associado ao ônibus e à linha, ano de fabricação e tempo de vida.
+    
 OBSERVAÇÃO IMPORTANTE - TRATAMENTO DE IDENTIFICADORES:
     - O usuário pode perguntar números (ex: ônibus 32004) sem usar aspas. Para garantir que o filtro funcione, **SEMPRE converta a coluna alvo para string (.astype(str))** antes de comparar.
 
@@ -250,7 +254,7 @@ Se for dinheiro, use R$. Se for número, use formato brasileiro.
 
         try:
             print(f"{Fore.CYAN}🤔 Processando...{Style.RESET_ALL}")
-            resposta = func_timeout(60, agente.invoke, args=({"input": prompt_final},))
+            resposta = func_timeout(80, agente.invoke, args=({"input": prompt_final},))
             texto = resposta.get("output", str(resposta))
             print("\n" + Fore.BLUE + "🤖 Resposta:" + Style.RESET_ALL)
             print(texto)
