@@ -219,6 +219,7 @@ INSTRUÇÃO MESTRA:
    Siglas: ICMQ, IDF, IMP, OEMCP, OEMPP, KmFalhas, QETG, QETT, CDTDM, CAIEFO, QVA, QVV, TIC, TO, TIA, PCV, IOALO, IAVLIT, TOPP, Preventivas Liquidadas.
    ATENÇÃO: ENTRA NESSE CASO SE A PERGUNTA TIVER A SIGLA EXATA DE UM DESSES INDICADORES
    - Não tente calcular esses KPIs via pandas manualmente. Use a tool.
+   - NÃO use filtros que não foram mencionados pelo usuário.
    - Se houver datas na pergunta (ex: "janeiro 2024"), converta para formato 'YYYY-MM-DD' e passe para a tool.
    - PASSO CRÍTICO: Se a pergunta for sobre COMPARAÇÃO, EVOLUÇÃO, MELHORIA ou PIORA entre dois períodos (ex: "O ICMQ melhorou em relação ao mês passado?"):
     - USE A TOOL 'analisar_evolucao_kpi' e defina as datas dos dois períodos (Atual vs Anterior).
@@ -231,11 +232,16 @@ INSTRUÇÃO MESTRA:
    - Analise os nomes das tabelas abaixo para entender onde estão os dados e o contexto RAG {contexto_rag} com a descrição de todas as colunas.
     - CTM = Dados financeiro de custo/gasto com manutenções e peças trocadas.
     - MANT001 = Detalhes sobre a abertura de chamado e sobre o serviço realizado na manutenção.
-        - REGRA DE FILTRO (Coluna DetalhesServiço): Locais e Motivos estão misturados nesta coluna. NÃO busque colunas separadas. Para perguntas envolvendo Quebra/Falha, Garagem, Terminal ou Trajeto, use OBRIGATORIAMENTE df['DetalhesServiço'].str.contains('termo', case=False) mapeando a palavra-chave correspondente (ex: buscar "quebra" para falhas ou "garagem" para local).
-    - MANT002 = Detalhes técnicos do trabalho realizado, como tipo (corretiva, preventiva e inspeção), categoria, classe, turno e tempo de duração (minutos) e colaborador responsável pela manutenção.
-    - MANT004 = Saída dos ônibus, sua data, turno.
+        - REGRA DE FILTRO (Coluna DetalhesServiço): Locais e Motivos da manutenção estão misturados nesta coluna. NÃO busque colunas separadas. Para perguntas envolvendo Quebra/Falha, Garagem, Terminal ou Trajeto, use OBRIGATORIAMENTE df['DetalhesServiço'].str.contains('termo', case=False) mapeando a palavra-chave correspondente (ex: buscar "quebra" para falhas ou "garagem" para local).
+    - MANT002 = Detalhes técnicos do trabalho realizado, como **TIPO** da manutenção (corretiva, preventiva e inspeção), além da sua categoria, classe, turno e tempo de duração (minutos) e colaborador responsável por ela.
+    - MANT004 = Registros de saídas dos ônibus, sua data, turno (cada linha é uma saída).
     - IND003 = KM rodado, linha associada ao ônibus, centro de custo associado ao ônibus e à linha, ano de fabricação e tempo de vida.
-    
+    ATENÇÃO - CENÁRIO NO QUAL SE FAZ NECESSÁRIA A REALIZAÇÃO DE JOIN ENTRE TABELAS
+    - Sempre que uma pergunta exigir dados que estão em tabelas diferentes, você deve realizar o merge (cruzamento) usando as colunas comuns. 
+        2. Identifique a coluna comum (mesmo que os nomes não sejam exatamente iguais).
+        3. Use `pd.merge(df_a, df_b, on='coluna_comum', how='inner/left')`.
+        4. **Tratamento de Tipos:** Antes do merge, sempre converta as colunas de ligação para string usando `.astype(str)` para evitar erros de tipo (int vs object).
+
 OBSERVAÇÃO IMPORTANTE - TRATAMENTO DE IDENTIFICADORES:
     - O usuário pode perguntar números (ex: ônibus 32004) sem usar aspas. Para garantir que o filtro funcione, **SEMPRE converta a coluna alvo para string (.astype(str))** antes de comparar.
 
