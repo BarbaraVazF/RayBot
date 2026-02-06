@@ -552,7 +552,8 @@ def calcular_qvv(filtro_coluna: Optional[str]=None, filtro_valor: Optional[str]=
 
 @tool(args_schema=InputCalculoKPI)
 def calcular_tic(filtro_coluna: Optional[str]=None, filtro_valor: Optional[str]=None, data_inicial: Optional[str]=None, data_final: Optional[str]=None) -> str:
-    """Calcula o indicador TIC (Total de Itens Conformes/Corretos)."""
+    """Calcula o indicador TIC (Total de Itens Conformes/Corretos).
+    NÃO APLIQUE FILTROS QUE NÃO SÃO SOLICITADOS NA PERGUNTA"""
     return _calcular_indicador_prefixo("TIC", "TIC", 3, filtro_coluna, filtro_valor, data_inicial, data_final)
 
 @tool(args_schema=InputCalculoKPI)
